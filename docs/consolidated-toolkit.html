@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consolidated Agent Toolkit - Skills, Agents & Workflows</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-2: #1c2333;
+    --surface-3: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --purple: #d2a8ff;
+    --orange: #f0883e;
+    --red: #ff7b72;
+    --cyan: #79c0ff;
+    --yellow: #d29922;
+    --pink: #f778ba;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.85rem;
+    padding: 24px 0 0;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  /* Hero */
+  .hero {
+    padding: 40px 0 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--green), var(--accent), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p { color: var(--text-muted); font-size: 1.05rem; max-width: 800px; }
+  .hero .stats-row {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .hero .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+  }
+  .hero .stat .num { font-size: 1.4rem; font-weight: 700; color: var(--accent); }
+  .hero .stat .label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* Nav */
+  nav {
+    position: sticky;
+    top: 0;
+    background: rgba(13, 17, 23, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 12px 0;
+  }
+  nav .container {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  nav a:hover { color: var(--text); border-color: var(--border); }
+
+  /* Section */
+  section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  section:last-child { border-bottom: none; }
+  h2 { font-size: 1.6rem; margin-bottom: 8px; }
+  h3 { font-size: 1.2rem; margin-bottom: 6px; }
+  .section-desc { color: var(--text-muted); margin-bottom: 28px; font-size: 0.95rem; max-width: 800px; }
+
+  /* Principle cards */
+  .principle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .principle {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .principle h4 {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .principle h4 .icon { font-size: 1.1rem; }
+  .principle p { font-size: 0.85rem; color: var(--text-muted); }
+  .principle .source {
+    margin-top: 8px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    opacity: 0.7;
+  }
+
+  /* Workflow diagram */
+  .workflow-flow {
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+    overflow-x: auto;
+    padding: 20px 0;
+    margin-bottom: 24px;
+  }
+  .wf-step {
+    flex: 1;
+    min-width: 140px;
+    text-align: center;
+    position: relative;
+  }
+  .wf-step .wf-box {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 12px;
+    margin: 0 4px;
+    transition: border-color 0.2s;
+  }
+  .wf-step .wf-box:hover { border-color: var(--accent); }
+  .wf-step .wf-num {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .wf-step .wf-name { font-size: 0.95rem; font-weight: 600; }
+  .wf-step .wf-desc { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
+  .wf-step .wf-size { font-size: 0.65rem; color: var(--yellow); margin-top: 6px; font-weight: 600; }
+  .wf-arrow {
+    display: flex;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    padding: 0 2px;
+    flex-shrink: 0;
+  }
+
+  /* Skill cards */
+  .skill-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .skill-header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .skill-header h3 { margin-bottom: 0; }
+  .skill-header .skill-type {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .type-workflow { background: rgba(88, 166, 255, 0.12); color: var(--accent); }
+  .type-skill { background: rgba(63, 185, 80, 0.12); color: var(--green); }
+  .type-agent { background: rgba(210, 168, 255, 0.12); color: var(--purple); }
+  .type-infra { background: rgba(240, 136, 62, 0.12); color: var(--orange); }
+  .skill-body { padding: 20px 24px; }
+  .skill-body p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px; }
+
+  .skill-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .skill-meta .meta-item {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .skill-meta .meta-item strong { color: var(--text); }
+
+  .provenance {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .prov-pill {
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  .prov-sp { background: #ff6b6b18; color: #ff6b6b; }
+  .prov-gs { background: #58a6ff18; color: #58a6ff; }
+  .prov-aa { background: #3fb95018; color: #3fb950; }
+  .prov-co { background: #d2a8ff18; color: #d2a8ff; }
+  .prov-pk { background: #f0883e18; color: #f0883e; }
+  .prov-rc { background: #79c0ff18; color: #79c0ff; }
+  .prov-summit { background: #d2992218; color: #d29922; }
+
+  .instructions-block {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+  }
+  .instructions-block h4 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .instructions-block ol, .instructions-block ul {
+    margin-left: 18px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .instructions-block ol li, .instructions-block ul li { margin-bottom: 6px; }
+  .instructions-block ol li strong, .instructions-block ul li strong { color: var(--text); }
+  .instructions-block .count-badge {
+    float: right;
+    font-size: 0.68rem;
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  .count-ok { background: rgba(63, 185, 80, 0.12); color: var(--green); }
+  .count-warn { background: rgba(210, 153, 34, 0.12); color: var(--yellow); }
+
+  .summit-note {
+    background: rgba(210, 153, 34, 0.06);
+    border: 1px solid rgba(210, 153, 34, 0.2);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .summit-note strong { color: var(--yellow); }
+
+  /* Expandable details */
+  .skill-details {
+    border-top: 1px solid var(--border);
+  }
+  .skill-details summary {
+    padding: 14px 24px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .skill-details summary::-webkit-details-marker { display: none; }
+  .skill-details summary::before {
+    content: '\25B6';
+    font-size: 0.6rem;
+    transition: transform 0.2s;
+  }
+  .skill-details[open] summary::before { transform: rotate(90deg); }
+  .skill-details .detail-content {
+    padding: 0 24px 20px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .skill-details .detail-content h5 {
+    font-size: 0.8rem;
+    color: var(--accent);
+    margin: 12px 0 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .skill-details .detail-content ul { margin-left: 16px; }
+  .skill-details .detail-content ul li { margin-bottom: 4px; }
+  .skill-details .detail-content ul li strong { color: var(--text); }
+  .skill-details .detail-content code {
+    background: var(--surface-3);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.82rem;
+  }
+  .skill-details .detail-content pre {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px;
+    overflow-x: auto;
+    font-size: 0.8rem;
+    margin: 8px 0;
+    color: var(--text);
+  }
+  .skill-details .detail-content table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin: 8px 0;
+  }
+  .skill-details .detail-content th,
+  .skill-details .detail-content td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-details .detail-content th {
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Convergence section */
+  .convergence-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 16px;
+  }
+  .conv-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .conv-card h4 { font-size: 0.95rem; margin-bottom: 4px; }
+  .conv-card .conv-count {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .conv-card p { font-size: 0.85rem; color: var(--text-muted); }
+  .conv-card .conv-sources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 10px;
+  }
+  .conv-card .conv-src {
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: var(--surface-2);
+    color: var(--text-muted);
+  }
+
+  /* Implementation guide */
+  .impl-steps {
+    counter-reset: impl;
+  }
+  .impl-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .impl-step .step-num {
+    counter-increment: impl;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    color: var(--accent);
+  }
+  .impl-step h4 { font-size: 0.95rem; margin-bottom: 4px; }
+  .impl-step p { font-size: 0.85rem; color: var(--text-muted); }
+
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+  footer a { color: var(--accent); }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 1.6rem; }
+    .workflow-flow { flex-direction: column; align-items: center; }
+    .wf-arrow { transform: rotate(90deg); }
+    .principle-grid { grid-template-columns: 1fr; }
+    .convergence-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="analysis.html" class="back-link">&larr; Back to Skills Analysis</a>
+</div>
+
+<div class="hero">
+  <div class="container">
+    <h1>Consolidated Agent Toolkit</h1>
+    <p>A curated set of skills, agents, and workflows distilled from 6 open-source repos and validated against findings from the Coding Agents Summit 2026. Every item here represents a convergence pattern &mdash; sourced from multiple repos and filtered through summit principles.</p>
+    <div class="stats-row">
+      <div class="stat">
+        <div class="num">239+</div>
+        <div class="label">Original Items</div>
+      </div>
+      <div class="stat">
+        <div class="num">14</div>
+        <div class="label">Consolidated To</div>
+      </div>
+      <div class="stat">
+        <div class="num">&lt;35</div>
+        <div class="label">Max Instructions Each</div>
+      </div>
+      <div class="stat">
+        <div class="num">6</div>
+        <div class="label">Source Repos</div>
+      </div>
+      <div class="stat">
+        <div class="num">10</div>
+        <div class="label">Summit Speakers</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <div class="container">
+    <a href="#principles">Principles</a>
+    <a href="#convergence">Convergence</a>
+    <a href="#workflow">Workflow</a>
+    <a href="#skills">Skills</a>
+    <a href="#agents">Agents</a>
+    <a href="#infra">Infrastructure</a>
+    <a href="#implement">Implementation</a>
+  </div>
+</nav>
+
+<!-- DESIGN PRINCIPLES -->
+<section id="principles">
+  <div class="container">
+    <h2>Design Principles</h2>
+    <p class="section-desc">Every item in this toolkit was designed against these constraints. They come from the intersection of what worked across repos and what the summit validated.</p>
+
+    <div class="principle-grid">
+      <div class="principle">
+        <h4><span class="icon">&#9889;</span> Instruction Budget</h4>
+        <p>Every skill stays under 35 instructions. LLMs reliably follow ~150-200 total; at 35 per skill you can stack 4-5 active skills without degradation.</p>
+        <div class="source">Summit: Dex Horthy | Validated by: gstack preamble bloat issues</div>
+      </div>
+      <div class="principle">
+        <h4><span class="icon">&#9878;</span> Human In The Loop</h4>
+        <p>Workflows force the agent to surface assumptions for human correction before writing code. No automated decision pipelines. The engineer makes design choices.</p>
+        <div class="source">Summit: "Do not outsource the thinking" | Validated by: superpowers brainstorming gates</div>
+      </div>
+      <div class="principle">
+        <h4><span class="icon">&#9874;</span> Control Flow, Not Prompts</h4>
+        <p>Multi-phase workflows use actual routing (classify input, call focused skill) not monolithic prompts with 85 instructions hoping the model follows all phases.</p>
+        <div class="source">Summit: Dex on CRISPY split | 12 Factor Agents paper</div>
+      </div>
+      <div class="principle">
+        <h4><span class="icon">&#128196;</span> Static Artifacts</h4>
+        <p>Every workflow phase writes output to a file. This survives compaction, enables session resumption, and allows human review without context window dependency.</p>
+        <div class="source">Summit: Dex on static assets | superpowers spec files | gstack session persistence</div>
+      </div>
+      <div class="principle">
+        <h4><span class="icon">&#128270;</span> Verify The Code</h4>
+        <p>Review actual code, not plans. Plans have surprises; code is truth. Verification means running commands and reading output, not claiming success.</p>
+        <div class="source">Summit: "Please read the code" | superpowers verification-before-completion | agency-agents Reality Checker</div>
+      </div>
+      <div class="principle">
+        <h4><span class="icon">&#128274;</span> Security By Default</h4>
+        <p>Three layers: scoped credentials before starting, audit logging during, vulnerability scanning after. Agents inherit your access &mdash; treat them like an intern on day one.</p>
+        <div class="source">Summit: Milan Williams (Semgrep) | gstack safety hooks | counselors env security</div>
+      </div>
+      <div class="principle">
+        <h4><span class="icon">&#128218;</span> Codebase First</h4>
+        <p>Always scan existing patterns before proposing changes. Research is objective compression of truth, never opinion. Separate the "what are we building" from "what exists."</p>
+        <div class="source">Summit: Dex on research contamination | rails-conventions codebase-first | palkan analyze</div>
+      </div>
+      <div class="principle">
+        <h4><span class="icon">&#9993;</span> Vertical Slicing</h4>
+        <p>Plans and implementations follow vertical slices (end-to-end with checkpoints) not horizontal layers (all DB, then all API, then all frontend). Testable at each phase.</p>
+        <div class="source">Summit: Dex on vertical vs horizontal | Validated by: "models cannot stop writing horizontal plans"</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONVERGENCE ANALYSIS -->
+<section id="convergence">
+  <div class="container">
+    <h2>Convergence Analysis</h2>
+    <p class="section-desc">Patterns that appeared in 3+ repos AND were validated by summit findings. These are the highest-confidence patterns &mdash; independently discovered by multiple teams and confirmed by real-world data from thousands of engineers.</p>
+
+    <div class="convergence-grid">
+
+      <div class="conv-card">
+        <h4>Structured Process Before Code</h4>
+        <div class="conv-count">5 repos + 4 summit speakers</div>
+        <p>Every high-performing repo gates on some form of planning before implementation. Summit refined this: the structure should be lightweight alignment (design + outline), not heavyweight plans. But the principle &mdash; think before you build &mdash; is universal.</p>
+        <div class="conv-sources">
+          <span class="conv-src">superpowers-ruby</span>
+          <span class="conv-src">gstack</span>
+          <span class="conv-src">agency-agents</span>
+          <span class="conv-src">counselors</span>
+          <span class="conv-src">palkan</span>
+          <span class="conv-src">Dex (CRISPY)</span>
+          <span class="conv-src">Mihail (RePPIT)</span>
+        </div>
+      </div>
+
+      <div class="conv-card">
+        <h4>Evidence-Based Verification</h4>
+        <div class="conv-count">4 repos + 3 summit speakers</div>
+        <p>Never claim work is done without running verification. "Confidence is not evidence." This pattern independently emerged as superpowers' Iron Law, agency-agents' Reality Checker, gstack's QA health scores, and Dex's "read the code."</p>
+        <div class="conv-sources">
+          <span class="conv-src">superpowers-ruby</span>
+          <span class="conv-src">gstack</span>
+          <span class="conv-src">agency-agents</span>
+          <span class="conv-src">counselors</span>
+          <span class="conv-src">Dex</span>
+          <span class="conv-src">Databricks</span>
+          <span class="conv-src">Semgrep</span>
+        </div>
+      </div>
+
+      <div class="conv-card">
+        <h4>Code Review Over Plan Review</h4>
+        <div class="conv-count">5 repos + 2 summit speakers</div>
+        <p>5 of 6 repos built dedicated review capabilities. Summit validated this but redirected the target: review code, not plans. Plans are approximations; code is what ships. The review should focus on actual implementation quality.</p>
+        <div class="conv-sources">
+          <span class="conv-src">superpowers-ruby</span>
+          <span class="conv-src">gstack</span>
+          <span class="conv-src">agency-agents</span>
+          <span class="conv-src">counselors</span>
+          <span class="conv-src">palkan</span>
+          <span class="conv-src">Dex</span>
+          <span class="conv-src">Databricks</span>
+        </div>
+      </div>
+
+      <div class="conv-card">
+        <h4>Systematic Debugging</h4>
+        <div class="conv-count">3 repos + summit validated</div>
+        <p>Root cause first, always. superpowers' 4-phase investigation, gstack's /investigate, and agency-agents' Workflow Architect all enforce "understand before fixing." Summit's CRISPY separates research from implementation to prevent premature solutions.</p>
+        <div class="conv-sources">
+          <span class="conv-src">superpowers-ruby</span>
+          <span class="conv-src">gstack</span>
+          <span class="conv-src">agency-agents</span>
+          <span class="conv-src">Dex (research separation)</span>
+        </div>
+      </div>
+
+      <div class="conv-card">
+        <h4>Test-Driven Quality</h4>
+        <div class="conv-count">4 repos + 2 summit speakers</div>
+        <p>Tests aren't optional. superpowers enforces strict TDD, gstack's QA generates regression tests, palkan uses specification tests as design tools, rails-conventions mandates minitest. Summit: "verification is king with LLMs."</p>
+        <div class="conv-sources">
+          <span class="conv-src">superpowers-ruby</span>
+          <span class="conv-src">gstack</span>
+          <span class="conv-src">palkan</span>
+          <span class="conv-src">rails-conventions</span>
+          <span class="conv-src">Databricks</span>
+          <span class="conv-src">Dex</span>
+        </div>
+      </div>
+
+      <div class="conv-card">
+        <h4>Security Scanning</h4>
+        <div class="conv-count">4 repos + 2 summit speakers</div>
+        <p>Multiple approaches, universal concern. Summit elevated this from "nice to have" to "three-layer framework": scoped credentials, audit logging, and code scanning. Not just preventing agent mistakes but controlling what agents can access.</p>
+        <div class="conv-sources">
+          <span class="conv-src">superpowers-ruby</span>
+          <span class="conv-src">gstack</span>
+          <span class="conv-src">counselors</span>
+          <span class="conv-src">rails-conventions</span>
+          <span class="conv-src">Semgrep</span>
+          <span class="conv-src">Databricks</span>
+        </div>
+      </div>
+
+      <div class="conv-card">
+        <h4>Codebase-First Research</h4>
+        <div class="conv-count">3 repos + summit validated</div>
+        <p>Scan existing patterns before proposing changes. rails-conventions mandates inspection, palkan analyzes architecture layers, superpowers researches codebase. Summit adds: research context must be objective &mdash; hide the ticket to prevent opinion contamination.</p>
+        <div class="conv-sources">
+          <span class="conv-src">superpowers-ruby</span>
+          <span class="conv-src">palkan</span>
+          <span class="conv-src">rails-conventions</span>
+          <span class="conv-src">Dex (ticket-blind research)</span>
+        </div>
+      </div>
+
+      <div class="conv-card">
+        <h4>Architecture Quality Gates</h4>
+        <div class="conv-count">3 repos + summit compatible</div>
+        <p>Quantified thresholds for code quality. palkan's callback scoring (1-5), rails-conventions' size limits (class &lt;200 lines), superpowers' Sandi Metz rules (class &lt;100 LOC). Different numbers, same idea: measurable, enforceable quality boundaries.</p>
+        <div class="conv-sources">
+          <span class="conv-src">superpowers-ruby</span>
+          <span class="conv-src">palkan</span>
+          <span class="conv-src">rails-conventions</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOW -->
+<section id="workflow">
+  <div class="container">
+    <h2>The Consolidated Workflow</h2>
+    <p class="section-desc">Five phases, each a separate focused skill with its own context window. Inspired by Dex's CRISPY evolution but simplified and incorporating the strongest patterns from all repos. Each phase writes a static artifact &mdash; you can resume from any point.</p>
+
+    <div class="workflow-flow">
+      <div class="wf-step">
+        <div class="wf-box" style="border-color: var(--cyan);">
+          <div class="wf-num" style="color: var(--cyan);">Phase 1</div>
+          <div class="wf-name">Research</div>
+          <div class="wf-desc">Objective codebase exploration. Ticket-blind.</div>
+          <div class="wf-size">&lt;30 instructions</div>
+        </div>
+      </div>
+      <div class="wf-arrow">&rarr;</div>
+      <div class="wf-step">
+        <div class="wf-box" style="border-color: var(--green);">
+          <div class="wf-num" style="color: var(--green);">Phase 2</div>
+          <div class="wf-name">Design</div>
+          <div class="wf-desc">Alignment discussion. ~200 lines. Human decides.</div>
+          <div class="wf-size">&lt;25 instructions</div>
+        </div>
+      </div>
+      <div class="wf-arrow">&rarr;</div>
+      <div class="wf-step">
+        <div class="wf-box" style="border-color: var(--purple);">
+          <div class="wf-num" style="color: var(--purple);">Phase 3</div>
+          <div class="wf-name">Outline</div>
+          <div class="wf-desc">Vertical structure. Phases + signatures. ~2 pages.</div>
+          <div class="wf-size">&lt;20 instructions</div>
+        </div>
+      </div>
+      <div class="wf-arrow">&rarr;</div>
+      <div class="wf-step">
+        <div class="wf-box" style="border-color: var(--orange);">
+          <div class="wf-num" style="color: var(--orange);">Phase 4</div>
+          <div class="wf-name">Implement</div>
+          <div class="wf-desc">Work through outline. Verify each slice.</div>
+          <div class="wf-size">&lt;30 instructions</div>
+        </div>
+      </div>
+      <div class="wf-arrow">&rarr;</div>
+      <div class="wf-step">
+        <div class="wf-box" style="border-color: var(--red);">
+          <div class="wf-num" style="color: var(--red);">Phase 5</div>
+          <div class="wf-name">Review</div>
+          <div class="wf-desc">Read the actual code. Verify. Ship.</div>
+          <div class="wf-size">&lt;35 instructions</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summit-note">
+      <strong>Summit principle:</strong> Each phase runs in a fresh or minimal context window. The only shared state between phases is the static artifact files. This prevents context bloat, enables session resumption after compaction, and keeps instruction count low. "Don't use prompts for control flow if you can use control flow for control flow." &mdash; Dex Horthy
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <h2>Skills</h2>
+    <p class="section-desc">9 focused skills. Each is self-contained, under 35 instructions, and sourced from patterns that appeared in 3+ repos. Organized into workflow skills (sequential phases) and utility skills (standalone, invoke when needed).</p>
+
+    <h3 style="color: var(--accent); margin: 24px 0 16px; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">Workflow Skills</h3>
+
+    <!-- RESEARCH -->
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-icon" style="background: rgba(121, 192, 255, 0.12);">&#128270;</div>
+        <div style="flex: 1;">
+          <h3>/research</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Objective codebase exploration &mdash; ticket-blind, fact-only</p>
+        </div>
+        <span class="skill-type type-workflow">Workflow</span>
+      </div>
+      <div class="skill-body">
+        <div class="provenance">
+          <span class="prov-pill prov-sp">superpowers-ruby</span>
+          <span class="prov-pill prov-rc">rails-conventions</span>
+          <span class="prov-pill prov-pk">palkan</span>
+          <span class="prov-pill prov-summit">Summit: Dex</span>
+        </div>
+        <p>Explores the codebase to produce a compressed, objective research document. The critical innovation from the summit: the research context never sees the ticket or feature description. A separate context generates questions from the ticket; this skill executes those questions against the codebase and records only facts.</p>
+
+        <div class="instructions-block">
+          <h4>Core Instructions <span class="count-badge count-ok">18 instructions</span></h4>
+          <ol>
+            <li><strong>Accept a list of questions</strong> (never the ticket/feature description itself)</li>
+            <li><strong>For each question, launch a sub-agent</strong> that traces a vertical slice through the codebase</li>
+            <li><strong>Record only facts:</strong> file paths, function signatures, data flow, existing patterns, config</li>
+            <li><strong>No opinions, no suggestions, no implementation ideas</strong> &mdash; if you catch yourself writing "should" or "could," delete it</li>
+            <li><strong>Note existing patterns</strong> &mdash; how does similar functionality work today? Follow the codebase's conventions</li>
+            <li><strong>Note code quality signals</strong> &mdash; file sizes, method counts, recent churn (high churn + high complexity = potential god object)</li>
+            <li><strong>Scan for relevant tests</strong> &mdash; existing test patterns, test framework, fixtures vs factories</li>
+            <li><strong>Check recent git history</strong> for the touched files &mdash; who changed them, why, any patterns</li>
+            <li><strong>Write output</strong> to <code>docs/research/YYYY-MM-DD-&lt;topic&gt;.md</code></li>
+            <li><strong>Keep document under 500 lines</strong> &mdash; compress, don't dump</li>
+          </ol>
+        </div>
+
+        <div class="summit-note">
+          <strong>Summit insight (Dex):</strong> "If you tell the model what you're building, you get opinions. Good research is all facts. Research == compression of truth." The ticket is hidden deterministically, not via prompt instruction. Use separate context windows.
+        </div>
+      </div>
+      <details class="skill-details">
+        <summary>Rationale & Anti-Patterns</summary>
+        <div class="detail-content">
+          <h5>Why Ticket-Blind?</h5>
+          <p>When the model knows the goal, it cherry-picks facts that support a preferred approach and ignores inconvenient patterns. "Helpful assistants are trained to confirm our biases." Objective research catches the outdated pattern that a goal-aware researcher would gloss over.</p>
+          <h5>Anti-Patterns</h5>
+          <ul>
+            <li><strong>"Research this: we need to add X"</strong> &mdash; goal contamination. Generate questions separately, then research.</li>
+            <li><strong>Raw file dumps</strong> &mdash; not research. Compress to the relevant facts.</li>
+            <li><strong>"I recommend..."</strong> in research output &mdash; opinion contamination. Delete and rephrase as fact.</li>
+          </ul>
+          <h5>From rails-conventions</h5>
+          <p>Codebase-first scan philosophy: check <code>config.active_job.queue_adapter</code>, read the Gemfile, inspect runtime config before recommending any pattern. Respect what exists.</p>
+          <h5>From palkan</h5>
+          <p>Architecture analysis: identify layer violations, check callback scoring, detect god objects via churn &times; complexity. Research isn't just "what files exist" &mdash; it's "what's the health of the code I'm about to touch."</p>
+        </div>
+      </details>
+    </div>
+
+    <!-- DESIGN -->
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-icon" style="background: rgba(63, 185, 80, 0.12);">&#128172;</div>
+        <div style="flex: 1;">
+          <h3>/design</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Collaborative alignment discussion &mdash; human decides, agent surfaces</p>
+        </div>
+        <span class="skill-type type-workflow">Workflow</span>
+      </div>
+      <div class="skill-body">
+        <div class="provenance">
+          <span class="prov-pill prov-sp">superpowers-ruby</span>
+          <span class="prov-pill prov-gs">gstack</span>
+          <span class="prov-pill prov-summit">Summit: Dex (CRISPY)</span>
+          <span class="prov-pill prov-summit">Summit: Mihail (RePPIT)</span>
+        </div>
+        <p>Produces a ~200-line design discussion document. This is the highest-leverage point in the workflow: the agent brain-dumps everything it found, everything it wants to do, and everything it doesn't know. The human does "brain surgery" before any code is written. Merges superpowers' brainstorming gates with Dex's design discussion concept.</p>
+
+        <div class="instructions-block">
+          <h4>Core Instructions <span class="count-badge count-ok">22 instructions</span></h4>
+          <ol>
+            <li><strong>Load the research document</strong> and the ticket/feature description</li>
+            <li><strong>Present the current state</strong> &mdash; what exists today, relevant to this change</li>
+            <li><strong>Present the desired end state</strong> &mdash; what the solution should look like</li>
+            <li><strong>List patterns found</strong> &mdash; ask the human: "Are these the right patterns to follow?" (surface bad patterns for correction)</li>
+            <li><strong>Propose 2-3 approaches</strong> with trade-offs and your recommendation</li>
+            <li><strong>Ask open questions one at a time</strong> &mdash; things you don't know, ambiguities, decisions that need human input</li>
+            <li><strong>Record resolved decisions</strong> as they're made</li>
+            <li><strong>Keep the document under 200 lines</strong></li>
+            <li><strong>Write output</strong> to <code>docs/design/YYYY-MM-DD-&lt;topic&gt;-design.md</code></li>
+            <li><strong>Do NOT proceed to implementation</strong> until the human approves the design</li>
+          </ol>
+        </div>
+
+        <div class="summit-note">
+          <strong>Summit insight (Dex):</strong> "You're forcing the agent to brain dump out all the things it found, all the things it wants to do, all the things it thinks you want, and ask you questions about things it doesn't know. So you can do brain surgery on the agent before you proceed downstream."
+        </div>
+      </div>
+      <details class="skill-details">
+        <summary>Design Document Template</summary>
+        <div class="detail-content">
+          <pre># Design: [Feature Name]
+
+## Current State
+[What exists today. Relevant code, patterns, constraints.]
+
+## Desired End State
+[What the solution looks like when done.]
+
+## Patterns to Follow
+[Patterns found in research. HUMAN: confirm or correct these.]
+- Pattern A (found in path/to/file.rb)
+- Pattern B (found in path/to/other.rb)
+- ~~Pattern C~~ [FLAGGED: outdated, used by former engineer]
+
+## Approaches
+### Option 1: [Recommended] ...
+### Option 2: ...
+### Option 3: ...
+
+## Resolved Decisions
+- [Decision 1]: [Choice made] (reason)
+- [Decision 2]: [Choice made] (reason)
+
+## Open Questions
+- [ ] [Question the agent needs answered]
+- [ ] [Ambiguity that needs human input]</pre>
+          <h5>From superpowers-ruby brainstorming</h5>
+          <ul>
+            <li><strong>Hard gate</strong> &mdash; no implementation until design approved</li>
+            <li><strong>One question at a time</strong> &mdash; don't overwhelm</li>
+            <li><strong>Multiple choice preferred</strong> &mdash; easier for humans to respond</li>
+            <li><strong>YAGNI ruthlessly</strong> &mdash; remove unnecessary features from all designs</li>
+          </ul>
+          <h5>From gstack /office-hours</h5>
+          <ul>
+            <li><strong>Forcing questions</strong> &mdash; 6 diagnostic questions before building anything</li>
+            <li><strong>Taste decisions surfaced</strong> &mdash; only ask the human about things that require judgment</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+
+    <!-- OUTLINE -->
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-icon" style="background: rgba(210, 168, 255, 0.12);">&#128221;</div>
+        <div style="flex: 1;">
+          <h3>/outline</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Vertical structure outline &mdash; phases, signatures, checkpoints</p>
+        </div>
+        <span class="skill-type type-workflow">Workflow</span>
+      </div>
+      <div class="skill-body">
+        <div class="provenance">
+          <span class="prov-pill prov-summit">Summit: Dex (CRISPY)</span>
+          <span class="prov-pill prov-sp">superpowers-ruby</span>
+          <span class="prov-pill prov-gs">gstack</span>
+        </div>
+        <p>Produces a ~2-page structure outline &mdash; the "C header file" for the implementation. Not the exact code, but the phases, new types, function signatures, and verification checkpoints. The critical constraint: vertical slicing. Each phase is an end-to-end slice that can be tested independently.</p>
+
+        <div class="instructions-block">
+          <h4>Core Instructions <span class="count-badge count-ok">16 instructions</span></h4>
+          <ol>
+            <li><strong>Load the design document</strong> and research</li>
+            <li><strong>Break work into vertical phases</strong> &mdash; each phase produces something testable end-to-end</li>
+            <li><strong>NEVER write horizontal phases</strong> (all DB, then all services, then all frontend). Each phase touches all layers needed for that slice</li>
+            <li><strong>For each phase:</strong> list files to change, new types/signatures, verification command</li>
+            <li><strong>Include testing checkpoints</strong> between phases &mdash; what to run, what output to expect</li>
+            <li><strong>Keep under 80 lines</strong> &mdash; this is an outline, not a plan</li>
+            <li><strong>Write output</strong> to <code>docs/outline/YYYY-MM-DD-&lt;topic&gt;-outline.md</code></li>
+            <li><strong>Human reviews outline</strong> before implementation begins</li>
+          </ol>
+        </div>
+
+        <div class="summit-note">
+          <strong>Summit insight (Dex):</strong> "If the plan is the implementation, the outline is the C header files. Just the signatures and the new types &mdash; enough for you to see what the agent is thinking and correct it if it's wrong." Also: "Models love horizontal plans. We cannot prompt this out. Vertical structure must be a hard constraint."
+        </div>
+      </div>
+      <details class="skill-details">
+        <summary>Vertical vs Horizontal Example</summary>
+        <div class="detail-content">
+          <h5>Horizontal (BAD) &mdash; models default to this</h5>
+          <pre>Phase 1: Database migration (add tables, columns)
+Phase 2: Service layer (all business logic)
+Phase 3: API endpoints (all routes)
+Phase 4: Frontend (all views)
+Phase 5: Tests (all tests)
+= 1,200 lines with nothing testable until Phase 5</pre>
+          <h5>Vertical (GOOD) &mdash; must be explicitly enforced</h5>
+          <pre>Phase 1: Mock API endpoint + wire frontend for happy path
+  Verify: page renders with mock data
+Phase 2: Database migration + real service for happy path
+  Verify: page renders with real data
+Phase 3: Error handling + edge cases
+  Verify: error states render correctly
+Phase 4: Authorization + security
+  Verify: unauthorized access blocked
+= 4 testable checkpoints, catch problems early</pre>
+        </div>
+      </details>
+    </div>
+
+    <!-- IMPLEMENT -->
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-icon" style="background: rgba(240, 136, 62, 0.12);">&#9881;</div>
+        <div style="flex: 1;">
+          <h3>/implement</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Execute outline phases with verification checkpoints</p>
+        </div>
+        <span class="skill-type type-workflow">Workflow</span>
+      </div>
+      <div class="skill-body">
+        <div class="provenance">
+          <span class="prov-pill prov-sp">superpowers-ruby</span>
+          <span class="prov-pill prov-gs">gstack</span>
+          <span class="prov-pill prov-summit">Summit: Dex</span>
+        </div>
+        <p>Works through the outline phase by phase. After each phase, runs the verification checkpoint. If it fails, stops and fixes before proceeding. Incorporates superpowers' TDD discipline and verification-before-completion gate.</p>
+
+        <div class="instructions-block">
+          <h4>Core Instructions <span class="count-badge count-ok">24 instructions</span></h4>
+          <ol>
+            <li><strong>Load the outline</strong> &mdash; work through phases in order</li>
+            <li><strong>For each phase:</strong> write tests first (red), then implementation (green), then refactor</li>
+            <li><strong>Run verification checkpoint</strong> after each phase &mdash; read the actual output</li>
+            <li><strong>If checkpoint fails:</strong> fix before proceeding. Do not start next phase with broken state</li>
+            <li><strong>If 3+ fix attempts fail:</strong> stop and ask the human. This likely indicates an architectural problem, not a code bug</li>
+            <li><strong>Write minimal code</strong> &mdash; no "while I'm here" improvements, no features not in the outline</li>
+            <li><strong>Follow existing patterns</strong> found during research. Do not introduce new patterns without flagging</li>
+            <li><strong>No completion claims without fresh verification evidence</strong> &mdash; run the command, read the output, then claim</li>
+            <li><strong>Commit after each successful phase</strong> with a descriptive message</li>
+          </ol>
+        </div>
+      </div>
+      <details class="skill-details">
+        <summary>Verification Gate (from superpowers-ruby)</summary>
+        <div class="detail-content">
+          <h5>The Gate Function</h5>
+          <pre>BEFORE claiming any status:
+1. IDENTIFY: What command proves this claim?
+2. RUN: Execute the FULL command (fresh, complete)
+3. READ: Full output, check exit code, count failures
+4. VERIFY: Does output confirm the claim?
+   - If NO: State actual status with evidence
+   - If YES: State claim WITH evidence
+5. ONLY THEN: Make the claim</pre>
+          <h5>Red Flags</h5>
+          <table>
+            <tr><th>Claim</th><th>Requires</th><th>Not Sufficient</th></tr>
+            <tr><td>Tests pass</td><td>Test command output: 0 failures</td><td>Previous run, "should pass"</td></tr>
+            <tr><td>Bug fixed</td><td>Test original symptom: passes</td><td>Code changed, assumed fixed</td></tr>
+            <tr><td>Build succeeds</td><td>Build command: exit 0</td><td>Linter passing, logs look good</td></tr>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- REVIEW -->
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-icon" style="background: rgba(255, 123, 114, 0.12);">&#128269;</div>
+        <div style="flex: 1;">
+          <h3>/review</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Code review &mdash; actual diff, not plans</p>
+        </div>
+        <span class="skill-type type-workflow">Workflow</span>
+      </div>
+      <div class="skill-body">
+        <div class="provenance">
+          <span class="prov-pill prov-sp">superpowers-ruby</span>
+          <span class="prov-pill prov-gs">gstack</span>
+          <span class="prov-pill prov-co">counselors</span>
+          <span class="prov-pill prov-pk">palkan</span>
+          <span class="prov-pill prov-summit">Summit: Dex</span>
+        </div>
+        <p>Reviews the actual code diff against the base branch. Combines superpowers' two-stage review (spec compliance + code quality), gstack's structural checks (SQL safety, trust boundaries), palkan's layer violation detection, and counselors' multi-perspective analysis. Defaults to "needs work" until evidence proves readiness.</p>
+
+        <div class="instructions-block">
+          <h4>Core Instructions <span class="count-badge count-ok">28 instructions</span></h4>
+          <ol>
+            <li><strong>Read the full diff</strong> against base branch &mdash; <code>git diff &lt;base&gt;...HEAD</code></li>
+            <li><strong>Stage 1 &mdash; Correctness:</strong> Does this implement what the design described? Check each resolved design decision</li>
+            <li><strong>Stage 2 &mdash; Quality:</strong> Check for:
+              <ul style="margin-top: 4px;">
+                <li>Layer violations (model depends on controller, service accepts request)</li>
+                <li>SQL safety (raw SQL, N+1 queries, missing indexes)</li>
+                <li>Security (injection, auth bypass, exposed secrets, OWASP Top 10)</li>
+                <li>Code quality (method/class size, complexity, naming)</li>
+                <li>Test coverage (every new path has a test, edge cases covered)</li>
+                <li>Pattern consistency (follows existing codebase patterns)</li>
+              </ul>
+            </li>
+            <li><strong>Default to "NEEDS WORK"</strong> until evidence proves readiness</li>
+            <li><strong>Categorize findings:</strong> must-fix (blocks merge), should-fix (tech debt), nit (style)</li>
+            <li><strong>Run tests</strong> &mdash; all tests must pass before approving</li>
+            <li><strong>Output a review summary</strong> with findings, verdict, and any blocking items</li>
+          </ol>
+        </div>
+      </div>
+      <details class="skill-details">
+        <summary>Review Checklist Detail</summary>
+        <div class="detail-content">
+          <h5>From palkan &mdash; Layer Violation Detection</h5>
+          <table>
+            <tr><th>Violation</th><th>Example</th><th>Fix</th></tr>
+            <tr><td>Model uses Current</td><td><code>Current.user</code> in model</td><td>Pass user as parameter</td></tr>
+            <tr><td>Service accepts request</td><td><code>param :request</code></td><td>Extract value object</td></tr>
+            <tr><td>Controller has business logic</td><td>Pricing in action</td><td>Extract to service/model</td></tr>
+          </table>
+          <h5>From gstack &mdash; Structural Checks</h5>
+          <ul>
+            <li><strong>SQL safety:</strong> raw SQL in migrations, missing indexes on foreign keys, N+1 in new queries</li>
+            <li><strong>LLM trust boundaries:</strong> user input flowing to prompts without sanitization</li>
+            <li><strong>Conditional side effects:</strong> side effects hidden in conditional branches</li>
+          </ul>
+          <h5>From counselors &mdash; Multi-Perspective</h5>
+          <p>If available, run the same diff through multiple models for independent perspectives. Track where they agree (high confidence) vs disagree (needs human judgment).</p>
+          <h5>From agency-agents &mdash; Reality Checker</h5>
+          <p>"Default to NEEDS WORK until overwhelming evidence proves readiness. Demand screenshots, test results, actual verification."</p>
+        </div>
+      </details>
+    </div>
+
+    <h3 style="color: var(--green); margin: 40px 0 16px; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">Utility Skills</h3>
+
+    <!-- DEBUG -->
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-icon" style="background: rgba(255, 123, 114, 0.12);">&#128027;</div>
+        <div style="flex: 1;">
+          <h3>/debug</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Systematic root cause investigation &mdash; no fixes without understanding</p>
+        </div>
+        <span class="skill-type type-skill">Utility</span>
+      </div>
+      <div class="skill-body">
+        <div class="provenance">
+          <span class="prov-pill prov-sp">superpowers-ruby</span>
+          <span class="prov-pill prov-gs">gstack</span>
+        </div>
+        <p>Four-phase systematic debugging: (1) Root cause investigation, (2) Pattern analysis, (3) Hypothesis testing, (4) Implementation. No fixes without completing Phase 1. If 3+ fixes fail, stop and question the architecture. Directly adapted from superpowers-ruby's systematic-debugging skill.</p>
+
+        <div class="instructions-block">
+          <h4>Core Instructions <span class="count-badge count-ok">20 instructions</span></h4>
+          <ol>
+            <li><strong>Phase 1 &mdash; Root Cause:</strong> Read error messages completely. Reproduce consistently. Check recent changes. Trace data flow</li>
+            <li><strong>In multi-component systems:</strong> Add diagnostic logging at each component boundary before attempting fixes</li>
+            <li><strong>Phase 2 &mdash; Pattern Analysis:</strong> Find working examples. Compare working vs broken. Identify every difference</li>
+            <li><strong>Phase 3 &mdash; Hypothesis:</strong> State clearly: "I think X because Y." Make the smallest change to test. One variable at a time</li>
+            <li><strong>Phase 4 &mdash; Fix:</strong> Create failing test first. Implement single fix. Verify all tests pass</li>
+            <li><strong>If 3+ fixes fail:</strong> STOP. Question the architecture. Discuss with human before attempting more</li>
+            <li><strong>Red flags:</strong> "Quick fix for now," "Just try changing X," "I don't fully understand but..." &mdash; all mean return to Phase 1</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- TDD -->
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-icon" style="background: rgba(63, 185, 80, 0.12);">&#10003;</div>
+        <div style="flex: 1;">
+          <h3>/tdd</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Test-driven development cycle &mdash; red-green-refactor</p>
+        </div>
+        <span class="skill-type type-skill">Utility</span>
+      </div>
+      <div class="skill-body">
+        <div class="provenance">
+          <span class="prov-pill prov-sp">superpowers-ruby</span>
+          <span class="prov-pill prov-gs">gstack</span>
+          <span class="prov-pill prov-pk">palkan</span>
+          <span class="prov-pill prov-rc">rails-conventions</span>
+        </div>
+        <p>Strict TDD: write the test, watch it fail, write minimal code, watch it pass, refactor. "If you didn't watch the test fail, you don't know if it tests the right thing." No production code without a failing test first. Directly adapted from superpowers-ruby.</p>
+
+        <div class="instructions-block">
+          <h4>Core Instructions <span class="count-badge count-ok">14 instructions</span></h4>
+          <ol>
+            <li><strong>RED:</strong> Write one minimal test showing what should happen. One behavior, clear name, real code</li>
+            <li><strong>Verify RED:</strong> Run test. Must fail. Must fail because feature is missing, not because of typos</li>
+            <li><strong>GREEN:</strong> Write the simplest code to pass the test. No extra features, no YAGNI</li>
+            <li><strong>Verify GREEN:</strong> Run test. Must pass. Other tests must still pass</li>
+            <li><strong>REFACTOR:</strong> Clean up. Remove duplication. Improve names. Keep tests green</li>
+            <li><strong>Repeat</strong> for next behavior</li>
+            <li><strong>If code was written before test:</strong> Delete it. Start over. No exceptions. "Keep as reference" = rationalization</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECURITY -->
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-icon" style="background: rgba(247, 120, 186, 0.12);">&#128274;</div>
+        <div style="flex: 1;">
+          <h3>/security</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Three-layer security audit &mdash; access + logging + scanning</p>
+        </div>
+        <span class="skill-type type-skill">Utility</span>
+      </div>
+      <div class="skill-body">
+        <div class="provenance">
+          <span class="prov-pill prov-gs">gstack</span>
+          <span class="prov-pill prov-sp">superpowers-ruby</span>
+          <span class="prov-pill prov-co">counselors</span>
+          <span class="prov-pill prov-rc">rails-conventions</span>
+          <span class="prov-pill prov-summit">Summit: Semgrep</span>
+          <span class="prov-pill prov-summit">Summit: Databricks</span>
+        </div>
+        <p>Combines gstack's OWASP+STRIDE analysis, superpowers' Brakeman integration, counselors' multi-model security review, and the summit's three-layer framework from Milan Williams. Not just code scanning &mdash; also verifies access controls and audit trail setup.</p>
+
+        <div class="instructions-block">
+          <h4>Core Instructions <span class="count-badge count-ok">30 instructions</span></h4>
+          <ol>
+            <li><strong>Layer 1 &mdash; Access Control:</strong>
+              <ul>
+                <li>Check credential scoping: are tokens/keys scoped to minimum needed?</li>
+                <li>Check MCP server configs for plain-text secrets</li>
+                <li>Verify env var allowlist/denylist (block NODE_OPTIONS, LD_PRELOAD)</li>
+              </ul>
+            </li>
+            <li><strong>Layer 2 &mdash; Audit Trail:</strong>
+              <ul>
+                <li>Verify hooks log agent actions (shell commands, file edits)</li>
+                <li>Check session transcript persistence</li>
+              </ul>
+            </li>
+            <li><strong>Layer 3 &mdash; Code Scanning:</strong>
+              <ul>
+                <li>OWASP Top 10: injection, broken auth, XSS, CSRF, SSRF, IDOR</li>
+                <li>STRIDE threat model for new attack surfaces</li>
+                <li>Secrets archaeology: git history for leaked credentials</li>
+                <li>Dependency supply chain: known vulnerabilities in dependencies</li>
+                <li>Run static analysis (Brakeman for Rails, Semgrep, or equivalent)</li>
+              </ul>
+            </li>
+            <li><strong>Categorize findings:</strong> critical (blocks ship), high, medium, low</li>
+            <li><strong>Output actionable report</strong> with specific file:line references</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARCHITECTURE -->
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-icon" style="background: rgba(240, 136, 62, 0.12);">&#127970;</div>
+        <div style="flex: 1;">
+          <h3>/architecture</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Architecture analysis &mdash; layers, quality gates, god objects</p>
+        </div>
+        <span class="skill-type type-skill">Utility</span>
+      </div>
+      <div class="skill-body">
+        <div class="provenance">
+          <span class="prov-pill prov-pk">palkan</span>
+          <span class="prov-pill prov-rc">rails-conventions</span>
+          <span class="prov-pill prov-sp">superpowers-ruby</span>
+        </div>
+        <p>Analyzes codebase architecture using palkan's layered design framework, rails-conventions' quantified quality gates, and superpowers' Sandi Metz rules. Detects layer violations, scores callbacks, finds god objects via churn &times; complexity, and checks code quality thresholds.</p>
+
+        <div class="instructions-block">
+          <h4>Core Instructions <span class="count-badge count-ok">22 instructions</span></h4>
+          <ol>
+            <li><strong>Layer analysis:</strong> Map code to Presentation / Application / Domain / Infrastructure. Flag reverse dependencies</li>
+            <li><strong>Callback scoring (1-5):</strong> 5=Transformer, 4=Maintainer, 3=Timestamp, 2=Background trigger, 1=Operation. Extract anything scoring 1-2</li>
+            <li><strong>God object detection:</strong> High churn + high complexity = candidate. Map responsibility clusters</li>
+            <li><strong>Quality gates:</strong> Class &lt;200 lines (ideal &lt;100), method &lt;10 lines (hard limit 20), &lt;15 public methods per class</li>
+            <li><strong>Specification test:</strong> If a test needs contexts beyond the primary layer's responsibility, the code has misplaced logic</li>
+            <li><strong>Output:</strong> Findings ranked by impact, with specific refactoring recommendations and gradual adoption paths</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENTS -->
+<section id="agents">
+  <div class="container">
+    <h2>Agents</h2>
+    <p class="section-desc">3 focused agents with distinct roles. Each runs in its own context window with minimal instructions. These are dispatched by skills, not invoked directly by users &mdash; eliminating the "magic words" problem.</p>
+
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-icon" style="background: rgba(121, 192, 255, 0.12);">&#128301;</div>
+        <div style="flex: 1;">
+          <h3>Research Agent</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Ticket-blind codebase explorer &mdash; dispatched by /research</p>
+        </div>
+        <span class="skill-type type-agent">Agent</span>
+      </div>
+      <div class="skill-body">
+        <div class="provenance">
+          <span class="prov-pill prov-sp">superpowers-ruby</span>
+          <span class="prov-pill prov-summit">Summit: Dex</span>
+        </div>
+        <p>Runs in a fresh context window that receives only a research question (never the ticket). Traces a single vertical slice through the codebase using native agentic search tools (grep, find, read &mdash; not RAG). Returns compressed, fact-only findings. Multiple instances can run in parallel for different questions.</p>
+
+        <div class="instructions-block">
+          <h4>Agent Instructions <span class="count-badge count-ok">10 instructions</span></h4>
+          <ol>
+            <li>You receive a single research question. Answer it with facts from the codebase</li>
+            <li>Use grep, find, and read to explore. Do not use RAG or vector search</li>
+            <li>Record: file paths, function signatures, data flow, config, patterns</li>
+            <li>No opinions, no "should," no implementation suggestions</li>
+            <li>Follow references: if function A calls B, read B too</li>
+            <li>Note the health of code you find (size, complexity, test coverage)</li>
+            <li>Return compressed findings under 100 lines</li>
+          </ol>
+        </div>
+
+        <div class="summit-note">
+          <strong>Summit insight (Jessica Wang, Braintrust):</strong> Agentic search (grep, find, read) matched or beat vector search while using 3x fewer tokens and costing 2.8x less. "Vector search returns chunks without the connective tissue that makes a fix possible." Use native tools.
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-icon" style="background: rgba(255, 123, 114, 0.12);">&#128270;</div>
+        <div style="flex: 1;">
+          <h3>Review Agent</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Code quality reviewer &mdash; dispatched by /review</p>
+        </div>
+        <span class="skill-type type-agent">Agent</span>
+      </div>
+      <div class="skill-body">
+        <div class="provenance">
+          <span class="prov-pill prov-sp">superpowers-ruby</span>
+          <span class="prov-pill prov-gs">gstack</span>
+          <span class="prov-pill prov-aa">agency-agents</span>
+        </div>
+        <p>Receives a diff and a review context document. Performs focused code review with a "NEEDS WORK" default. Combines superpowers' two-stage review pattern with agency-agents' Reality Checker skepticism. Can be dispatched multiple times for different review focuses (correctness, security, architecture).</p>
+
+        <div class="instructions-block">
+          <h4>Agent Instructions <span class="count-badge count-ok">12 instructions</span></h4>
+          <ol>
+            <li>You receive a diff and review focus (correctness, quality, security, or architecture)</li>
+            <li>Default verdict: NEEDS WORK. Change only with clear evidence of readiness</li>
+            <li>For each finding: file, line, severity (must-fix / should-fix / nit), description</li>
+            <li>Check that tests exist for new code paths</li>
+            <li>Check that existing patterns are followed</li>
+            <li>Return structured findings sorted by severity</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-icon" style="background: rgba(247, 120, 186, 0.12);">&#128737;</div>
+        <div style="flex: 1;">
+          <h3>Security Agent</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Vulnerability scanner &mdash; dispatched by /security</p>
+        </div>
+        <span class="skill-type type-agent">Agent</span>
+      </div>
+      <div class="skill-body">
+        <div class="provenance">
+          <span class="prov-pill prov-gs">gstack</span>
+          <span class="prov-pill prov-co">counselors</span>
+          <span class="prov-pill prov-summit">Summit: Semgrep</span>
+        </div>
+        <p>Runs targeted security analysis on specific files or diffs. Checks OWASP Top 10, searches git history for leaked secrets, and validates input sanitization. Runs static analysis tools if available (Brakeman, Semgrep). Separate from the review agent to keep instruction count low and focus sharp.</p>
+
+        <div class="instructions-block">
+          <h4>Agent Instructions <span class="count-badge count-ok">14 instructions</span></h4>
+          <ol>
+            <li>You receive a list of files or a diff to scan</li>
+            <li>Check for: injection (SQL, command, template), auth bypass, XSS, CSRF, SSRF, IDOR</li>
+            <li>Search git history for secrets: <code>git log -p | grep -i "api_key\|secret\|password\|token"</code></li>
+            <li>Run static analysis if available (Brakeman, Semgrep, gosec)</li>
+            <li>Check dependency versions against known CVEs</li>
+            <li>Return findings with severity, file:line, and remediation steps</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFRASTRUCTURE -->
+<section id="infra">
+  <div class="container">
+    <h2>Infrastructure</h2>
+    <p class="section-desc">Supporting systems that make the skills and agents more effective. These aren't invoked directly &mdash; they're the substrate that skills operate on.</p>
+
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-icon" style="background: rgba(210, 153, 34, 0.12);">&#128200;</div>
+        <div style="flex: 1;">
+          <h3>Memory System</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Corrections persist, knowledge compounds across sessions</p>
+        </div>
+        <span class="skill-type type-infra">Infrastructure</span>
+      </div>
+      <div class="skill-body">
+        <div class="provenance">
+          <span class="prov-pill prov-summit">Summit: Erin Ahmed (Cleric)</span>
+          <span class="prov-pill prov-summit">Summit: Faye Zhang (Pinterest)</span>
+          <span class="prov-pill prov-aa">agency-agents</span>
+        </div>
+        <p>None of the 6 repos had real learning architecture. The summit identified this as the next differentiation frontier. This system implements Erin Ahmed's three lessons and Faye Zhang's 3-tier memory model.</p>
+
+        <div class="instructions-block">
+          <h4>Architecture</h4>
+          <ol>
+            <li><strong>Hot Memory</strong> (session-level) &mdash; Current task context, recent tool outputs, active decisions. Lives in context window. Cleared on session end</li>
+            <li><strong>Domain Memory</strong> (project-level) &mdash; Corrections, team preferences, resolved decisions, patterns learned. Stored in <code>.claude/memory/</code> files. Persists across sessions. Indexed by topic</li>
+            <li><strong>Cold Storage</strong> (global) &mdash; Cross-project learnings, user preferences, tool preferences. Stored in <code>~/.claude/memory/</code>. Persists across projects</li>
+          </ol>
+        </div>
+
+        <div class="instructions-block">
+          <h4>Learning Loop</h4>
+          <ol>
+            <li><strong>Act:</strong> Agent performs task</li>
+            <li><strong>Correct:</strong> Human corrects mistakes &mdash; make correction easy (propose memories, capture ratings)</li>
+            <li><strong>Improve:</strong> Persist correction &rarr; compound to new contexts &rarr; show reasoning trail</li>
+          </ol>
+        </div>
+
+        <div class="summit-note">
+          <strong>Summit insight (Erin Ahmed):</strong> "Easy correction without visible improvement kills trust. Visible improvement without ambient context limits learning. Ambient context without correction compounds errors." All three must work together.
+        </div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-header">
+        <div class="skill-icon" style="background: rgba(88, 166, 255, 0.12);">&#128256;</div>
+        <div style="flex: 1;">
+          <h3>Safety Hooks</h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin: 0;">Guardrails that prevent destructive actions and log agent activity</p>
+        </div>
+        <span class="skill-type type-infra">Infrastructure</span>
+      </div>
+      <div class="skill-body">
+        <div class="provenance">
+          <span class="prov-pill prov-gs">gstack</span>
+          <span class="prov-pill prov-co">counselors</span>
+          <span class="prov-pill prov-summit">Summit: Semgrep</span>
+        </div>
+        <p>Combines gstack's /careful and /freeze hooks with counselors' read-only enforcement and the summit's audit trail recommendation. These are Claude Code hooks (settings.json) that fire on every agent action.</p>
+
+        <div class="instructions-block">
+          <h4>Hooks</h4>
+          <ol>
+            <li><strong>Audit Hook:</strong> Logs every shell command with timestamp to <code>.claude/audit.jsonl</code></li>
+            <li><strong>Destructive Command Warning:</strong> Warns before <code>rm -rf</code>, <code>git reset --hard</code>, <code>DROP TABLE</code>, <code>git push --force</code></li>
+            <li><strong>Directory Lock:</strong> Optionally restrict file edits to a specific directory tree (like gstack's /freeze)</li>
+            <li><strong>Env Var Protection:</strong> Block agents from reading/setting dangerous env vars (NODE_OPTIONS, LD_PRELOAD, DYLD_INSERT_LIBRARIES)</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- IMPLEMENTATION GUIDE -->
+<section id="implement">
+  <div class="container">
+    <h2>Implementation Guide</h2>
+    <p class="section-desc">How to adopt this toolkit. Start with 3 items, not 14. Follow the trust ladder.</p>
+
+    <div class="impl-steps">
+
+      <div class="impl-step">
+        <div class="step-num">1</div>
+        <div>
+          <h4>Start with /review + /verify + safety hooks</h4>
+          <p>These give you the highest immediate impact with zero workflow change. /review catches problems in code you're already writing. Verification prevents false completion claims. Safety hooks log what the agent does. You can add these to an existing workflow today.</p>
+        </div>
+      </div>
+
+      <div class="impl-step">
+        <div class="step-num">2</div>
+        <div>
+          <h4>Add /design for complex features</h4>
+          <p>When you're about to build something that would take more than a few hours, use /design to align before coding. This is the single highest-leverage skill &mdash; catching wrong assumptions on a 200-line doc instead of 2,000 lines of code. Don't use it for small tasks; that's overhead without value.</p>
+        </div>
+      </div>
+
+      <div class="impl-step">
+        <div class="step-num">3</div>
+        <div>
+          <h4>Add /research + /outline for larger features</h4>
+          <p>Once /design feels natural, add objective research before design and vertical outlines after. These prevent two specific failure modes: biased research (opinion contamination) and horizontal plans (untestable until everything's done). Reserve for multi-day features.</p>
+        </div>
+      </div>
+
+      <div class="impl-step">
+        <div class="step-num">4</div>
+        <div>
+          <h4>Add /debug + /tdd + /security as needed</h4>
+          <p>These are utility skills &mdash; invoke when the situation calls for them, not on every task. /debug when you hit a bug. /tdd when writing new features. /security before shipping anything that touches auth, payments, or user data.</p>
+        </div>
+      </div>
+
+      <div class="impl-step">
+        <div class="step-num">5</div>
+        <div>
+          <h4>Add /architecture for ongoing health</h4>
+          <p>Periodically run architecture analysis to catch drift. Useful during quarterly reviews or when onboarding to an unfamiliar codebase. Not needed on every feature.</p>
+        </div>
+      </div>
+
+      <div class="impl-step">
+        <div class="step-num">6</div>
+        <div>
+          <h4>Build the memory system incrementally</h4>
+          <p>Start by manually saving corrections to project memory files. As patterns emerge, formalize the hot/domain/cold tier structure. The memory system is the longest-term investment &mdash; it compounds over months.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 24px;">
+      <h3 style="color: var(--accent); margin-bottom: 8px;">Context Budget Calculator</h3>
+      <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">Use this to check if your skill combination fits within the instruction budget.</p>
+      <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <th style="padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 0.72rem; text-transform: uppercase;">Skill</th>
+            <th style="padding: 8px 12px; text-align: center; border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 0.72rem; text-transform: uppercase;">Instructions</th>
+            <th style="padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 0.72rem; text-transform: uppercase;">Typical Combinations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">/research</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid var(--border);">18</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted);">Runs alone (fresh context)</td></tr>
+          <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">/design</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid var(--border);">22</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted);">Runs alone (interactive session)</td></tr>
+          <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">/outline</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid var(--border);">16</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted);">Runs alone (reads design artifact)</td></tr>
+          <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">/implement</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid var(--border);">24</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted);">+ /tdd (38 total) or + /debug (44 total)</td></tr>
+          <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">/review</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid var(--border);">28</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted);">+ /security (58 total) or alone</td></tr>
+          <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">/debug</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid var(--border);">20</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted);">+ /tdd (34 total)</td></tr>
+          <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">/tdd</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid var(--border);">14</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted);">Pairs with any skill</td></tr>
+          <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">/security</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid var(--border);">30</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted);">Runs alone or + /review (58 total)</td></tr>
+          <tr><td style="padding: 8px 12px; border-bottom: 1px solid var(--border);">/architecture</td><td style="padding: 8px 12px; text-align: center; border-bottom: 1px solid var(--border);">22</td><td style="padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted);">Runs alone</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 12px;"><strong>Budget rule:</strong> Keep active instruction total under 60 per session. CLAUDE.md, system prompt, and tool definitions consume ~80-100 instructions of the ~200 budget. That leaves ~100-120 for skills, and you want headroom for the actual task instructions.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Consolidated from 6 repos (superpowers-ruby, gstack, agency-agents, counselors, palkan/skills, rails-conventions) and validated against <a href="summit-findings.html">Coding Agents Summit 2026</a> findings. See the <a href="analysis.html">original analysis</a> for individual repo details. Generated March 30, 2026.</p>
+  </div>
+</footer>
+
+</body>
+</html>

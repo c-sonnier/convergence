@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summit Findings vs Skills Analysis - Coding Agents Summit 2026</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-2: #1c2333;
+    --border: #30363d;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-2: #3fb950;
+    --accent-3: #d2a8ff;
+    --accent-4: #f0883e;
+    --accent-5: #ff7b72;
+    --accent-6: #79c0ff;
+    --red: #ff7b72;
+    --green: #3fb950;
+    --yellow: #d29922;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 0.85rem;
+    padding: 24px 0 0;
+  }
+  .back-link:hover { text-decoration: underline; }
+
+  /* Hero */
+  .hero {
+    padding: 40px 0 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--accent-5), var(--accent-4));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero p { color: var(--text-muted); font-size: 1.05rem; max-width: 750px; }
+  .hero .meta {
+    margin-top: 16px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .hero .meta span {
+    display: inline-block;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 10px;
+    margin-right: 8px;
+    margin-top: 4px;
+  }
+
+  /* Nav */
+  nav {
+    position: sticky;
+    top: 0;
+    background: rgba(13, 17, 23, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 12px 0;
+  }
+  nav .container {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+  }
+  nav a:hover { color: var(--text); border-color: var(--border); }
+
+  /* Sections */
+  section { padding: 48px 0; border-bottom: 1px solid var(--border); }
+  section:last-child { border-bottom: none; }
+  h2 {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+  }
+  .section-desc { color: var(--text-muted); margin-bottom: 28px; font-size: 0.95rem; }
+
+  /* Contradiction cards */
+  .contradiction {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .contradiction .header {
+    padding: 20px 24px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .contradiction .severity {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: 7px;
+  }
+  .severity-high { background: var(--red); box-shadow: 0 0 8px rgba(255, 123, 114, 0.4); }
+  .severity-med { background: var(--yellow); box-shadow: 0 0 8px rgba(210, 153, 34, 0.4); }
+  .severity-low { background: var(--accent); box-shadow: 0 0 8px rgba(88, 166, 255, 0.3); }
+  .contradiction h3 { font-size: 1.1rem; margin-bottom: 2px; }
+  .contradiction .source { font-size: 0.8rem; color: var(--text-muted); }
+  .contradiction .body { padding: 0 24px 20px; }
+  .contradiction .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .contradiction .col {
+    background: var(--surface-2);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .contradiction .col h4 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .col-analysis h4 { color: var(--accent); }
+  .col-summit h4 { color: var(--accent-4); }
+  .contradiction .col p, .contradiction .col ul {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+  .contradiction .col ul { margin-left: 16px; }
+  .contradiction .col ul li { margin-bottom: 4px; }
+  .contradiction .col ul li strong { color: var(--text); }
+  .contradiction .impact {
+    background: rgba(255, 123, 114, 0.06);
+    border: 1px solid rgba(255, 123, 114, 0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+  .contradiction .impact strong { color: var(--text); }
+  .impact-yellow {
+    background: rgba(210, 153, 34, 0.06) !important;
+    border-color: rgba(210, 153, 34, 0.15) !important;
+  }
+  .impact-blue {
+    background: rgba(88, 166, 255, 0.06) !important;
+    border-color: rgba(88, 166, 255, 0.15) !important;
+  }
+
+  /* Alignment cards */
+  .alignment {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .alignment .check {
+    flex-shrink: 0;
+    color: var(--green);
+    font-size: 1.1rem;
+    margin-top: 2px;
+  }
+  .alignment h4 { font-size: 1rem; margin-bottom: 4px; }
+  .alignment p { font-size: 0.88rem; color: var(--text-muted); }
+
+  /* Speaker grid */
+  .speaker-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  .speaker-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .speaker-card h4 { font-size: 0.95rem; margin-bottom: 2px; }
+  .speaker-card .role { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; }
+  .speaker-card p { font-size: 0.85rem; color: var(--text-muted); }
+  .speaker-card .key-quote {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: var(--surface-2);
+    border-left: 3px solid var(--accent-3);
+    border-radius: 0 6px 6px 0;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--text);
+  }
+
+  /* Recommendations */
+  .rec-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .rec {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .rec h4 {
+    font-size: 1rem;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .rec .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .rec p, .rec ul { font-size: 0.9rem; color: var(--text-muted); }
+  .rec ul { margin: 8px 0 0 20px; }
+  .rec ul li { margin-bottom: 4px; }
+  .rec ul li strong { color: var(--text); }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 1.5rem; }
+    .contradiction .two-col { grid-template-columns: 1fr; }
+    .speaker-grid { grid-template-columns: 1fr; }
+  }
+
+  footer {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a href="analysis.html" class="back-link">&larr; Back to Skills Analysis</a>
+</div>
+
+<div class="hero">
+  <div class="container">
+    <h1>Summit Findings vs Our Skills Analysis</h1>
+    <p>What the Coding Agents Summit (March 3, 2026) taught us about where our original repo analysis was right, wrong, and missing critical dimensions entirely.</p>
+    <div class="meta">
+      <span>Coding Agents Summit - South Bay 2026</span>
+      <span>Computer History Museum, March 3</span>
+      <span>10 speakers analyzed</span>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <div class="container">
+    <a href="#contradictions">Contradictions</a>
+    <a href="#tensions">Tensions</a>
+    <a href="#missing">Missing Dimensions</a>
+    <a href="#aligned">What Held Up</a>
+    <a href="#speakers">Speaker Insights</a>
+    <a href="#recommendations">Revised Recommendations</a>
+    <a href="consolidated-toolkit.html" style="color: var(--green); border-color: rgba(63,185,80,0.3);">Consolidated Toolkit &rarr;</a>
+  </div>
+</nav>
+
+<!-- CONTRADICTIONS -->
+<section id="contradictions">
+  <div class="container">
+    <h2>Direct Contradictions</h2>
+    <p class="section-desc">Places where the summit findings directly undermine claims or assumptions in our original analysis.</p>
+
+    <div class="contradiction">
+      <div class="header">
+        <div class="severity severity-high"></div>
+        <div>
+          <h3>1. Instruction Budget Ignored</h3>
+          <div class="source">Dexter Horthy (HumanLayer) &mdash; "Everything We Got Wrong About RPI"</div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="two-col">
+          <div class="col col-analysis">
+            <h4>What Our Analysis Said</h4>
+            <p>Praised repos with more skills/agents as higher-value. superpowers-ruby (28 skills), gstack (28 commands), and agency-agents (150+ agents) scored highest on "Breadth of Coverage" and "Workflow Orchestration." More = better was the implicit assumption.</p>
+          </div>
+          <div class="col col-summit">
+            <h4>What the Summit Found</h4>
+            <p>Frontier LLMs reliably follow ~150-200 instructions. Dex's original 85-instruction prompt was already too many, causing critical workflow steps to be skipped ~50% of the time. He split into prompts with &lt;40 instructions each. "Mind your instruction budget" was a core takeaway.</p>
+          </div>
+        </div>
+        <div class="impact">
+          <strong>Impact:</strong> The repos we rated highest for breadth may actually perform worst in practice. Loading 28 interdependent skills or 150+ agent personas into context would blow the instruction budget and degrade the model's ability to follow any of them. Our analysis lacked a "context efficiency" dimension entirely.
+        </div>
+      </div>
+    </div>
+
+    <div class="contradiction">
+      <div class="header">
+        <div class="severity severity-high"></div>
+        <div>
+          <h3>2. Plans Aren't Leverage</h3>
+          <div class="source">Dexter Horthy (HumanLayer) &mdash; on plan vs code review</div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="two-col">
+          <div class="col col-analysis">
+            <h4>What Our Analysis Said</h4>
+            <p>Positioned plan generation as a major value-add across all workflow repos. Praised gstack's 7-phase pipeline, superpowers-ruby's brainstorm-plan-execute-review, and NEXUS's 7-phase pipeline. "Structured Development Workflows" was highlighted as a key overlap theme.</p>
+          </div>
+          <div class="col col-summit">
+            <h4>What the Summit Found</h4>
+            <p>A 1,000-line plan produces ~1,000 lines of code (within 10%). Plans contain surprises &mdash; the implementation will differ. Reading the plan is the same amount of work as reading the code, so you end up doing double work. "Don't read the plans. Please read the code."</p>
+          </div>
+        </div>
+        <div class="impact">
+          <strong>Impact:</strong> The real leverage is in shorter alignment artifacts: 200-line design discussions (where are we going?) and 2-page structure outlines (how do we get there? &mdash; like C header files). None of the 6 repos produce this kind of lightweight alignment doc. They all generate full implementation plans, which Dex now considers low-leverage.
+        </div>
+      </div>
+    </div>
+
+    <div class="contradiction">
+      <div class="header">
+        <div class="severity severity-high"></div>
+        <div>
+          <h3>3. Automating Decisions Is the Trap</h3>
+          <div class="source">Dexter Horthy, Jake (Netflix) &mdash; "Do not outsource the thinking"</div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="two-col">
+          <div class="col col-analysis">
+            <h4>What Our Analysis Said</h4>
+            <p>Treated automation depth as a positive. Praised gstack's /autoplan (automated CEO-Design-Eng pipeline), agency-agents' NEXUS full automation with quality gates, and multi-agent orchestration broadly. Higher automation = higher score.</p>
+          </div>
+          <div class="col col-summit">
+            <h4>What the Summit Found</h4>
+            <p>"Do not outsource the thinking. You the engineer are an important part of this process." The design discussion format forces the agent to brain-dump all assumptions, decisions, and open questions so the human can do "brain surgery" on the agent's understanding before any code is written.</p>
+          </div>
+        </div>
+        <div class="impact">
+          <strong>Impact:</strong> Workflows that automate decision-making (gstack's /autoplan, NEXUS full mode) are optimizing for the wrong thing. The highest-leverage moment is when the engineer corrects the agent's wrong assumptions on a 200-line doc &mdash; before 2,000 lines of code get written. The analysis should have evaluated "how much does this workflow keep the human in the decision loop?" not "how much does it automate?"
+        </div>
+      </div>
+    </div>
+
+    <div class="contradiction">
+      <div class="header">
+        <div class="severity severity-high"></div>
+        <div>
+          <h3>4. Research Must Be Objective</h3>
+          <div class="source">Dexter Horthy &mdash; on research contamination</div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="two-col">
+          <div class="col col-analysis">
+            <h4>What Our Analysis Said</h4>
+            <p>Did not distinguish between objective and opinionated research. Evaluated research capabilities by whether the repo had them, not by how they were structured. No repo was flagged for mixing implementation intent with codebase research.</p>
+          </div>
+          <div class="col col-summit">
+            <h4>What the Summit Found</h4>
+            <p>"Research == Compression of Truth." When you tell the model what you're building during research, it injects opinions instead of facts. Fix: deterministically separate context windows &mdash; one to generate questions from the ticket, a fresh one with no knowledge of the ticket to produce research. "Helpful assistants are trained to confirm our biases."</p>
+          </div>
+        </div>
+        <div class="impact">
+          <strong>Impact:</strong> Any research skill that lets the model see the ticket/feature description while researching the codebase will produce contaminated, opinion-laden research. This is a structural design flaw that our analysis didn't evaluate. The fix is architectural: separate context windows for question generation and research execution.
+        </div>
+      </div>
+    </div>
+
+    <div class="contradiction">
+      <div class="header">
+        <div class="severity severity-med"></div>
+        <div>
+          <h3>5. Magic Words Are a Design Flaw</h3>
+          <div class="source">Dexter Horthy &mdash; on onboarding failures</div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="two-col">
+          <div class="col col-analysis">
+            <h4>What Our Analysis Said</h4>
+            <p>Praised superpowers-ruby's "mandatory skill invocation" pattern and gstack's specific slash commands as features. Treated knowing which of 28 commands to use as acceptable complexity. Called it "process gates, not suggestions."</p>
+          </div>
+          <div class="col col-summit">
+            <h4>What the Summit Found</h4>
+            <p>"If you built a tool that requires hours and hours of training and reps to get good results from, go fix the tool." Dex found himself in workshops saying "guys, don't forget to say the magic words" and called it "quite frankly, embarrassing." The fix: use deterministic control flow, not prompt-based instructions.</p>
+          </div>
+        </div>
+        <div class="impact">
+          <strong>Impact:</strong> Repos that require users to know exactly which of 28 commands to invoke exhibit the "magic words" anti-pattern. A well-designed system should route to the right behavior deterministically based on input classification, not rely on the user (or the model) knowing the right incantation. Our analysis should have penalized complex invocation requirements.
+        </div>
+      </div>
+    </div>
+
+    <div class="contradiction">
+      <div class="header">
+        <div class="severity severity-med"></div>
+        <div>
+          <h3>6. Vertical Plans Over Horizontal Plans</h3>
+          <div class="source">Dexter Horthy &mdash; on plan structure</div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="two-col">
+          <div class="col col-analysis">
+            <h4>What Our Analysis Said</h4>
+            <p>Evaluated planning capabilities without distinguishing plan structure. Did not assess whether repos produce vertical (end-to-end slices with checkpoints) or horizontal (layer-by-layer) plans.</p>
+          </div>
+          <div class="col col-summit">
+            <h4>What the Summit Found</h4>
+            <p>Models default to horizontal plans: all database, then all services, then all API, then all frontend. This produces 1,200+ lines with nothing testable until the end. Vertical plans (mock endpoint &rarr; wire frontend &rarr; add services &rarr; database &rarr; integrate) have checkpoints where you can verify correctness before proceeding. "Despite every single model and trying to prompt this out, we cannot get models to stop writing horizontal plans."</p>
+          </div>
+        </div>
+        <div class="impact impact-yellow">
+          <strong>Impact:</strong> Planning skills that don't explicitly enforce vertical slicing will produce horizontal plans by default. This is a known, persistent model behavior that requires explicit countermeasures. None of the repos address this. Any planning skill should include vertical plan structure as a hard constraint.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TENSIONS -->
+<section id="tensions">
+  <div class="container">
+    <h2>Strong Tensions</h2>
+    <p class="section-desc">Not direct contradictions, but significant friction between our analysis assumptions and summit findings.</p>
+
+    <div class="contradiction">
+      <div class="header">
+        <div class="severity severity-med"></div>
+        <div>
+          <h3>Agent Swarms Skepticism</h3>
+          <div class="source">Dexter Horthy &mdash; on quality vs speed</div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="two-col">
+          <div class="col col-analysis">
+            <h4>What Our Analysis Said</h4>
+            <p>Gave agency-agents 10/10 for multi-agent orchestration. Praised NEXUS's 150+ agents across 7 phases. Treated multi-agent coordination as a uniformly positive capability.</p>
+          </div>
+          <div class="col col-summit">
+            <h4>What the Summit Found</h4>
+            <p>"I'm a little mid on agent swarms and the whole gas town thing because you still need to be able to ensure quality. Going 10x faster doesn't matter if you're going to throw it all away in 6 months." Target 2-3x with near-human quality, not 10x with slop.</p>
+          </div>
+        </div>
+        <div class="impact impact-yellow">
+          <strong>Impact:</strong> More agents is not inherently better. The analysis should have evaluated whether multi-agent setups include quality verification at each handoff, not just whether they have many agents. 150 agents with no quality guarantees may be worse than 5 well-verified ones.
+        </div>
+      </div>
+    </div>
+
+    <div class="contradiction">
+      <div class="header">
+        <div class="severity severity-med"></div>
+        <div>
+          <h3>Adoption Readiness</h3>
+          <div class="source">Scott Breitenother (Kilo Code) &mdash; 25T token analysis</div>
+        </div>
+      </div>
+      <div class="body">
+        <div class="two-col">
+          <div class="col col-analysis">
+            <h4>What Our Analysis Said</h4>
+            <p>Evaluated repos on capability and breadth without considering whether users are ready for that level of complexity. Scored "Ease of Adoption" but didn't connect it to the trust ladder.</p>
+          </div>
+          <div class="col col-summit">
+            <h4>What the Summit Found</h4>
+            <p>From 25T+ tokens across 1.5M developers: adoption follows a trust ladder (autocomplete &rarr; chat &rarr; single agents &rarr; orchestration). "If autocomplete fails, agents never get a chance." 49% of pro devs don't use AI daily. Developers climb, they don't jump.</p>
+          </div>
+        </div>
+        <div class="impact impact-yellow">
+          <strong>Impact:</strong> Most repos target the top of the trust ladder (orchestration). If a developer hasn't built trust at the agent level, giving them a 150-agent NEXUS framework is counterproductive. The analysis should have evaluated "what rung of the trust ladder does this repo assume?"
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MISSING DIMENSIONS -->
+<section id="missing">
+  <div class="container">
+    <h2>Missing Dimensions</h2>
+    <p class="section-desc">Critical evaluation axes the summit revealed that our analysis completely lacked.</p>
+
+    <div class="contradiction">
+      <div class="header">
+        <div class="severity severity-high"></div>
+        <div>
+          <h3>Context Efficiency</h3>
+          <div class="source">Dexter Horthy, Ankit Mathur (Databricks)</div>
+        </div>
+      </div>
+      <div class="body">
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">Our analysis never evaluated how much context window each repo consumes. The Databricks team noted "you have too many MCPs, the whole context window is full of instructions about how to use tools you don't care about." Dex showed that beyond ~40% context utilization, results degrade. The analysis should have included: instructions per skill, total context footprint, and whether the repo uses static artifacts (resumable across sessions) vs in-context state (lost on compaction).</p>
+        <div class="impact">
+          <strong>New evaluation question:</strong> "If I load this repo's skills into my context window, how much budget is left for my actual task?"
+        </div>
+      </div>
+    </div>
+
+    <div class="contradiction">
+      <div class="header">
+        <div class="severity severity-med"></div>
+        <div>
+          <h3>Learning & Memory Architecture</h3>
+          <div class="source">Erin Ahmed (Cleric), Faye Zhang (Pinterest)</div>
+        </div>
+      </div>
+      <div class="body">
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">Erin Ahmed argued that "agent capabilities are commoditized &mdash; the next horizon of differentiation is learning." Agents that don't persist corrections, compound knowledge, or absorb context continuously won't survive. Three lessons: make corrections easy, reward corrections with visible improvement, absorb context continuously. Faye Zhang identified "memory collapse" as a key agent failure mode and proposed 3-tier memory (hot, domain task, cold storage). Our analysis noted agency-agents' memory sections don't persist as a minor weakness. It should have been flagged as a fundamental architectural gap across all 6 repos.</p>
+        <div class="impact impact-yellow">
+          <strong>New evaluation question:</strong> "Does this repo help the agent learn from past mistakes, or does every session start from zero?"
+        </div>
+      </div>
+    </div>
+
+    <div class="contradiction">
+      <div class="header">
+        <div class="severity severity-med"></div>
+        <div>
+          <h3>Security as a First-Class Concern</h3>
+          <div class="source">Milan Williams (Semgrep), Ankit Mathur (Databricks)</div>
+        </div>
+      </div>
+      <div class="body">
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">Milan Williams outlined a practical security framework: (1) scoped credentials before starting, (2) audit logging via hooks during sessions, (3) automated code scanning before shipping. Databricks highlighted MCP authentication as a security nightmare &mdash; plain text tokens, locally stored, no rotation. Our analysis evaluated "Safety & Guardrails" but focused on preventing the agent from breaking things (gstack's /freeze, counselors' read-only). We didn't evaluate credential scoping, audit trails, or vulnerability scanning of generated code.</p>
+        <div class="impact impact-blue">
+          <strong>New evaluation question:</strong> "Does this repo help me control what the agent can access, log what it did, and verify the output is secure?"
+        </div>
+      </div>
+    </div>
+
+    <div class="contradiction">
+      <div class="header">
+        <div class="severity severity-low"></div>
+        <div>
+          <h3>Agentic Search vs Vector Search</h3>
+          <div class="source">Jessica Wang (Braintrust)</div>
+        </div>
+      </div>
+      <div class="body">
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">Braintrust's eval showed agentic search (grep, find, read &mdash; what Claude Code uses) matched or beat vector search while using 3x fewer tokens and costing 2.8x less per task. Vector search returns chunks without "connective tissue." Our analysis didn't evaluate how repos approach codebase search. Repos that rely on RAG pipelines for context may be spending more for worse results than those using Claude Code's native tools.</p>
+        <div class="impact impact-blue">
+          <strong>New evaluation question:</strong> "Does this repo use native code exploration or add a RAG layer that may not improve outcomes?"
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHAT HELD UP -->
+<section id="aligned">
+  <div class="container">
+    <h2>What Held Up</h2>
+    <p class="section-desc">Analysis findings that the summit validated or reinforced.</p>
+
+    <div class="alignment">
+      <div class="check">&#10003;</div>
+      <div>
+        <h4>Structured Process Beats Ad-Hoc Prompting</h4>
+        <p>Every summit speaker reinforced that having a structured workflow matters. Dex just argues the structure should be lighter (design discussion + outline) rather than heavier (full implementation plan). The principle is validated; the implementation needs refinement.</p>
+      </div>
+    </div>
+
+    <div class="alignment">
+      <div class="check">&#10003;</div>
+      <div>
+        <h4>Code Review Is Universally Valued</h4>
+        <p>Dex ("please read the code"), Databricks ("commenting on code reviews I feel like the author often also sees the code for the first time"), and Semgrep (scan before shipping) all reinforce that 5 of 6 repos having dedicated review is the right instinct. If anything, the analysis underweighted the importance of reviewing actual code vs reviewing plans.</p>
+      </div>
+    </div>
+
+    <div class="alignment">
+      <div class="check">&#10003;</div>
+      <div>
+        <h4>"Build for Yourself, Steal the Patterns"</h4>
+        <p>Our takeaway #6 was "study the patterns, then write skills that encode YOUR conventions." Dex's core message: "There is no magic prompt." Mihail Eric (Stanford): "This is something you should iterate on to find what works for you." The summit unanimously validates that custom workflows beat drop-in solutions.</p>
+      </div>
+    </div>
+
+    <div class="alignment">
+      <div class="check">&#10003;</div>
+      <div>
+        <h4>"Don't Adopt Everything at Once"</h4>
+        <p>Our takeaway #5 is directly supported by the instruction budget finding. If the model can only follow ~200 instructions, loading all 28 skills from any repo is self-defeating. Start small. The summit provides the scientific backing for what our analysis recommended on instinct.</p>
+      </div>
+    </div>
+
+    <div class="alignment">
+      <div class="check">&#10003;</div>
+      <div>
+        <h4>Evidence-Based Verification</h4>
+        <p>Our "trust but verify" theme (superpowers-ruby's verification-before-completion, gstack's QA, agency-agents' Reality Checker) maps directly to Dex's "please read the code" and Databricks' "verification is king with LLMs." The analysis got the principle right. The summit says apply it to code, not plans.</p>
+      </div>
+    </div>
+
+    <div class="alignment">
+      <div class="check">&#10003;</div>
+      <div>
+        <h4>Codebase-First Philosophy</h4>
+        <p>rails-conventions' "mandatory inspection before proposing changes" aligns with Dex's objective research principle. Scan what exists, don't impose opinions. This is the right instinct &mdash; the summit adds that the scan should happen in a context window that doesn't know what you're about to build.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPEAKER INSIGHTS -->
+<section id="speakers">
+  <div class="container">
+    <h2>Key Speaker Insights</h2>
+    <p class="section-desc">Summit speakers whose findings are most relevant to skill/agent design.</p>
+
+    <div class="speaker-grid">
+
+      <div class="speaker-card">
+        <h4>Dexter Horthy</h4>
+        <div class="role">Founder/CEO, HumanLayer</div>
+        <p>Evolved RPI (Research-Plan-Implement) into CRISPY (Questions-Research-Design-Structure-Plan-Work-Implement-PR). Key insight: split monolithic prompts into focused steps with &lt;40 instructions each. Use lightweight alignment docs, not heavyweight plans.</p>
+        <div class="key-quote">"2026 is the year of no more slop. Shoot for 2-3x. That's actually better business outcomes than going 10x faster and shipping a bunch of slop."</div>
+      </div>
+
+      <div class="speaker-card">
+        <h4>Scott Breitenother</h4>
+        <div class="role">CEO, Kilo Code</div>
+        <p>25T+ tokens across 1.5M developers. Adoption follows a trust ladder. The cognitive load shifts from doing work to orchestrating work. "AI doesn't reduce work &mdash; it intensifies it."</p>
+        <div class="key-quote">"Benchmarks tell you what models can do. 25 trillion tokens tell you what developers actually do. Build for trust, not capability."</div>
+      </div>
+
+      <div class="speaker-card">
+        <h4>Erin Ahmed</h4>
+        <div class="role">Head of Product, Cleric</div>
+        <p>Three lessons for learning agents: (1) make correction easy, (2) reward corrections with visible improvement, (3) absorb context continuously. Memory is the center of the act-correct-improve loop.</p>
+        <div class="key-quote">"Agent capabilities are commoditized. The next horizon of differentiation is learning."</div>
+      </div>
+
+      <div class="speaker-card">
+        <h4>Jessica Wang</h4>
+        <div class="role">DevRel Engineer, Braintrust</div>
+        <p>Eval comparing agentic search vs vector search. Agentic search matched or beat vector search while using 3x fewer tokens. Vector search returns fragments without the "connective tissue" that makes fixes possible.</p>
+        <div class="key-quote">"More searches does not equal better results. Vector used 2.8x more LLM calls for the same or worse accuracy."</div>
+      </div>
+
+      <div class="speaker-card">
+        <h4>Milan Williams</h4>
+        <div class="role">Senior PM, Semgrep</div>
+        <p>Three practical security steps: (1) scope credentials before starting, (2) set up audit logging via hooks, (3) scan code before shipping. "If you wouldn't give it to an intern, why'd you give it to your agent?"</p>
+        <div class="key-quote">"The goal isn't to slow down the agent. It's to make sure you're still in control when it moves fast."</div>
+      </div>
+
+      <div class="speaker-card">
+        <h4>Mihail Eric</h4>
+        <div class="role">Head of AI, Monaco / Stanford</div>
+        <p>Proposed RePPIT (Research-Propose-Plan-Implement-Test) as alternative to vibe coding. "You should have an active, functional mental model of how you would build your solution."</p>
+        <div class="key-quote">"Vibe coding is just not good enough to truly build good software. We're likely 2-10+ years away from that being viable for production."</div>
+      </div>
+
+      <div class="speaker-card">
+        <h4>Faye Zhang</h4>
+        <div class="role">Staff AI Engineer, Pinterest</div>
+        <p>Post-training sub-agents via Claude Code. Four reasons agents fail: spec drift across chains, data distribution imbalance, tool misuse, memory collapse. Proposed 3-tier memory: hot, domain task, cold storage.</p>
+        <div class="key-quote">"Fix agent orchestration via Agent SDK. Treat memory as a learned policy problem."</div>
+      </div>
+
+      <div class="speaker-card">
+        <h4>Zach Lloyd</h4>
+        <div class="role">Founder/CEO, Warp</div>
+        <p>2026 is the year of agent orchestration. Agents need persistent memory, coordination mechanisms, and cloud infrastructure. The "almost works" problem is the biggest challenge.</p>
+        <div class="key-quote">"Individuals are hitting limits with laptop capacity. Enterprises want auditability, repeatability, metrics, security."</div>
+      </div>
+
+      <div class="speaker-card">
+        <h4>Ankit Mathur</h4>
+        <div class="role">Software Engineer, Databricks AI</div>
+        <p>Built a Coding Agent Gateway for enterprise governance. 2,200+ engineers, 25K+ monthly commits. Bottlenecks are shifting from code generation to code reviews, CI scaling, and testing.</p>
+        <div class="key-quote">"Our goal is not to generate a lot of code, but to make sure we ship the best products for our users."</div>
+      </div>
+
+      <div class="speaker-card">
+        <h4>Yannis He</h4>
+        <div class="role">Founder, SWE-Bench Pro</div>
+        <p>Launching SWE Atlas: benchmarks beyond issue resolution. Codebase QnA, test writing, refactoring. Leading models score ~30%. "Being a software engineer is more than GitHub issues."</p>
+        <div class="key-quote">"Coding may become the new scaffolding, where AI self-develops tools that are more intuitive and effective to itself."</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- REVISED RECOMMENDATIONS -->
+<section id="recommendations">
+  <div class="container">
+    <h2>Revised Recommendations</h2>
+    <p class="section-desc">How the original analysis takeaways should change in light of summit findings.</p>
+
+    <div class="rec-grid">
+
+      <div class="rec">
+        <h4><span class="num" style="background: rgba(255, 123, 114, 0.15); color: var(--red);">1</span> Evaluate context efficiency, not breadth</h4>
+        <p>Before adopting any repo's skills, count the instructions. If a single skill has 40+ instructions, it's already risky. If you're loading multiple skills, you need their combined instruction count well under 200. Prefer repos that produce static artifacts (files you can resume from) over those that rely on in-context state.</p>
+        <ul>
+          <li><strong>Old advice:</strong> "Workflow structure is the highest-leverage investment"</li>
+          <li><strong>New advice:</strong> "Lightweight workflow structure with minimal instruction footprint is the highest-leverage investment"</li>
+        </ul>
+      </div>
+
+      <div class="rec">
+        <h4><span class="num" style="background: rgba(255, 123, 114, 0.15); color: var(--red);">2</span> Replace plan review with design alignment</h4>
+        <p>Instead of generating and reviewing 1,000-line implementation plans, generate a ~200-line design discussion (where are we going, what patterns to follow, resolved decisions, open questions) and a ~2-page structure outline (phases, signatures, types). Review those. Then let the agent write the plan for its own reference and go straight to code review.</p>
+        <ul>
+          <li><strong>Old advice:</strong> "Plan before you code, review the plan"</li>
+          <li><strong>New advice:</strong> "Align before you code (design + outline), review the code"</li>
+        </ul>
+      </div>
+
+      <div class="rec">
+        <h4><span class="num" style="background: rgba(210, 153, 34, 0.15); color: var(--yellow);">3</span> Keep the human in the decision loop</h4>
+        <p>Evaluate workflows by how much they force the agent to surface its assumptions and ask questions, not by how much they automate. The best moment in any workflow is when the agent shows you what it found and what it plans to do, and you correct its wrong assumptions on a short doc rather than in 2,000 lines of code.</p>
+        <ul>
+          <li><strong>Old advice:</strong> "Higher automation = higher value"</li>
+          <li><strong>New advice:</strong> "Higher alignment quality = higher value; automation serves alignment, not the reverse"</li>
+        </ul>
+      </div>
+
+      <div class="rec">
+        <h4><span class="num" style="background: rgba(210, 153, 34, 0.15); color: var(--yellow);">4</span> Use control flow, not prompts, for routing</h4>
+        <p>If your workflow has multiple phases, don't encode all phases in one prompt and hope the model follows them. Use actual if-statements and input classification to route to smaller, focused prompts. "Don't use prompts for control flow if you can use control flow for control flow."</p>
+        <ul>
+          <li><strong>Old advice:</strong> "Process gates in prompts"</li>
+          <li><strong>New advice:</strong> "Process gates in code; prompts handle one focused task"</li>
+        </ul>
+      </div>
+
+      <div class="rec">
+        <h4><span class="num" style="background: rgba(88, 166, 255, 0.15); color: var(--accent);">5</span> Separate research from implementation intent</h4>
+        <p>When researching a codebase, use a context window that doesn't know what you're about to build. Generate questions from the ticket in one context, then run objective research in a fresh context. This prevents the model from confirming your biases.</p>
+        <ul>
+          <li><strong>Old advice:</strong> Not addressed</li>
+          <li><strong>New advice:</strong> "Research context windows should never see the ticket. Research == compression of truth, not opinion."</li>
+        </ul>
+      </div>
+
+      <div class="rec">
+        <h4><span class="num" style="background: rgba(88, 166, 255, 0.15); color: var(--accent);">6</span> Enforce vertical plan structure</h4>
+        <p>If you use planning at all, explicitly constrain plans to vertical slices (end-to-end features with testable checkpoints) rather than horizontal layers (all DB, then all services, etc). Models default to horizontal. This requires explicit countermeasures in the planning prompt.</p>
+        <ul>
+          <li><strong>Old advice:</strong> Not addressed</li>
+          <li><strong>New advice:</strong> "Every planning skill should enforce vertical slicing with intermediate verification checkpoints"</li>
+        </ul>
+      </div>
+
+      <div class="rec">
+        <h4><span class="num" style="background: rgba(88, 166, 255, 0.15); color: var(--accent);">7</span> Add security controls to your agent setup</h4>
+        <p>Before evaluating what a repo can do, evaluate what it controls. Scoped credentials, audit logging, and code scanning are non-negotiable for production work. "If you wouldn't give it to an intern, why'd you give it to your agent?"</p>
+        <ul>
+          <li><strong>Old advice:</strong> "Safety & Guardrails" evaluated as preventing agent mistakes</li>
+          <li><strong>New advice:</strong> "Security is three layers: scoped access before, audit trails during, vulnerability scanning after"</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Analysis based on Coding Agents Summit - South Bay, March 3, 2026, at the Computer History Museum. Cross-referenced against our <a href="analysis.html" style="color: var(--accent);">Skills & Agent Repos Analysis</a> from March 27, 2026. See the <a href="consolidated-toolkit.html" style="color: var(--green);">Consolidated Toolkit</a> for the practical implementation of these findings.</p>
+  </div>
+</footer>
+
+</body>
+</html>
