@@ -105,14 +105,14 @@ Keep your active instruction total under 60 per session. CLAUDE.md, system promp
 
 Convergence consolidates patterns from 6 open-source repos:
 
-- [superpowers-ruby](https://github.com/) — Verification gates, TDD discipline, systematic debugging, brainstorming
-- [gstack](https://github.com/) — Safety hooks, QA health scores, security auditing (OWASP + STRIDE), staff-engineer review
-- [palkan/skills](https://github.com/) — Layered architecture analysis, callback scoring, god object detection, specification test
-- [rails-conventions](https://github.com/) — Codebase-first scanning, code quality gates, fail-fast philosophy
-- [counselors](https://github.com/) — Multi-model dispatch, read-only enforcement, convergence detection
-- [agency-agents](https://github.com/) — Reality Checker (skeptical verification), NEXUS orchestration, agent personas
+- [superpowers-ruby](https://github.com/lucianghinda/superpowers-ruby) — Verification gates, TDD discipline, systematic debugging, brainstorming
+- [gstack](https://github.com/garrytan/gstack) — Safety hooks, QA health scores, security auditing (OWASP + STRIDE), staff-engineer review
+- [palkan/skills](https://github.com/palkan/skills) — Layered architecture analysis, callback scoring, god object detection, specification test
+- [rails-conventions](https://github.com/ethos-link/rails-conventions) — Codebase-first scanning, code quality gates, fail-fast philosophy
+- [counselors](https://github.com/aarondfrancis/counselors) — Multi-model dispatch, read-only enforcement, convergence detection
+- [agency-agents](https://github.com/msitarzewski/agency-agents) — Reality Checker (skeptical verification), NEXUS orchestration, agent personas
 
-Every pattern included appears in 3+ repos. Validated against the [Coding Agents Summit 2026](docs/summit-findings.html) findings from 10 speakers and data from 25T+ tokens across 1.5M developers.
+Every pattern included appears in 3+ repos. Validated against the [Coding Agents Summit 2026](https://www.youtube.com/watch?v=YwZR6tc7qYg) ([detailed findings](docs/summit-findings.html)) from 10 speakers and data from 25T+ tokens across 1.5M developers.
 
 ## Docs
 
