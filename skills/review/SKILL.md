@@ -1,5 +1,5 @@
 ---
-name: review
+name: convergence-review
 description: "Code review on the actual diff against the base branch. Use after implementation or when asked to review a PR. Two-stage review: correctness (did we build the right thing?) then quality (did we build it right?). Defaults to NEEDS WORK until evidence proves readiness."
 ---
 

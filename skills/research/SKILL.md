@@ -1,5 +1,5 @@
 ---
-name: research
+name: convergence-research
 description: "Objective codebase exploration. Use before designing a new feature or change. Produces a compressed, fact-only research document. The research context never sees the ticket — a separate step generates questions, this skill answers them."
 ---
 

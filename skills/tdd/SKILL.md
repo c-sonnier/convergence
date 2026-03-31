@@ -1,5 +1,5 @@
 ---
-name: tdd
+name: convergence-tdd
 description: "Test-driven development cycle. Use when implementing features or fixing bugs. Write the test first, watch it fail, write minimal code to pass, refactor. No production code without a failing test first."
 ---
 

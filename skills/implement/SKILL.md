@@ -1,5 +1,5 @@
 ---
-name: implement
+name: convergence-implement
 description: "Execute outline phases with verification checkpoints. Use after /outline approval. Works through each phase sequentially: write tests first, implement, verify, commit. Stops and asks the human if 3+ fix attempts fail on any phase."
 ---
 

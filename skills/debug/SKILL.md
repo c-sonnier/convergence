@@ -1,5 +1,5 @@
 ---
-name: debug
+name: convergence-debug
 description: "Systematic root cause investigation. Use when encountering any bug, test failure, or unexpected behavior. Four phases: investigate, analyze patterns, hypothesize, fix. No fixes without root cause. If 3+ fixes fail, stop and question the architecture."
 ---
 

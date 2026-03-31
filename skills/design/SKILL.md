@@ -1,5 +1,5 @@
 ---
-name: design
+name: convergence-design
 description: "Collaborative alignment discussion with the human. Use after /research (or directly for smaller features). Produces a ~200-line design document. The human makes all design decisions — the agent surfaces assumptions, patterns, and open questions."
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: outline
+name: convergence-outline
 description: "Vertical structure outline with phases and checkpoints. Use after /design approval. Produces a ~2-page outline showing phases, file changes, signatures, and verification steps. Enforces vertical slicing — each phase is end-to-end testable."
 ---
 

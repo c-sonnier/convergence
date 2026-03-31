@@ -1,5 +1,5 @@
 ---
-name: security
+name: convergence-security
 description: "Three-layer security audit: access controls, audit trail, and code scanning. Use before shipping anything that touches auth, payments, user data, or external integrations. Combines OWASP Top 10, STRIDE threat modeling, and secrets archaeology."
 ---
 

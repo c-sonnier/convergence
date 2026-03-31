@@ -1,5 +1,5 @@
 ---
-name: architecture
+name: convergence-architecture
 description: "Architecture analysis with quantified quality gates. Use for codebase health checks, onboarding, or before major refactors. Detects layer violations, scores callbacks, finds god objects via churn x complexity, and checks code quality thresholds."
 ---
 
