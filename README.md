@@ -30,19 +30,19 @@ Use these sequentially for features. Each phase writes a static artifact file �
 
 | Skill | Instructions | Purpose |
 |-------|-------------|---------|
-| `/research` | 18 | Objective codebase exploration. Ticket-blind, fact-only |
-| `/design` | 22 | Alignment discussion with the human. ~200 lines. Human decides |
-| `/outline` | 16 | Vertical structure with phases, signatures, checkpoints |
-| `/implement` | 24 | Execute outline phases with TDD and verification |
-| `/review` | 28 | Code review on actual diff. Defaults to NEEDS WORK |
+| `/convergence-research` | 18 | Objective codebase exploration. Ticket-blind, fact-only |
+| `/convergence-design` | 22 | Alignment discussion with the human. ~200 lines. Human decides |
+| `/convergence-outline` | 16 | Vertical structure with phases, signatures, checkpoints |
+| `/convergence-implement` | 24 | Execute outline phases with TDD and verification |
+| `/convergence-review` | 28 | Code review on actual diff. Defaults to NEEDS WORK |
 
 **Typical flows:**
 
 ```
-Small feature:    /design → /implement → /review
-Large feature:    /research → /design → /outline → /implement → /review
-Bug fix:          /debug → /tdd
-Pre-ship:         /review + /security
+Small feature:    /convergence-design → /convergence-implement → /convergence-review
+Large feature:    /convergence-research → /convergence-design → /convergence-outline → /convergence-implement → /convergence-review
+Bug fix:          /convergence-debug → /convergence-tdd
+Pre-ship:         /convergence-review + /convergence-security
 ```
 
 ### Utility Skills
@@ -51,10 +51,10 @@ Use standalone, whenever the situation calls for them.
 
 | Skill | Instructions | Purpose |
 |-------|-------------|---------|
-| `/debug` | 20 | Systematic root cause investigation. No fixes without understanding |
-| `/tdd` | 14 | Test-driven development. Red-green-refactor |
-| `/security` | 30 | Three-layer security audit: access, logging, scanning |
-| `/architecture` | 22 | Layer analysis, callback scoring, god object detection, quality gates |
+| `/convergence-debug` | 20 | Systematic root cause investigation. No fixes without understanding |
+| `/convergence-tdd` | 14 | Test-driven development. Red-green-refactor |
+| `/convergence-security` | 30 | Three-layer security audit: access, logging, scanning |
+| `/convergence-architecture` | 22 | Layer analysis, callback scoring, god object detection, quality gates |
 
 ### Agents
 
@@ -62,9 +62,9 @@ Dispatched automatically by skills. You don't invoke these directly.
 
 | Agent | Instructions | Dispatched By |
 |-------|-------------|---------------|
-| Research Agent | 10 | `/research` — runs ticket-blind in fresh context |
-| Review Agent | 12 | `/review` — skeptical code reviewer |
-| Security Agent | 14 | `/security` — vulnerability scanner |
+| Research Agent | 10 | `/convergence-research` — runs ticket-blind in fresh context |
+| Review Agent | 12 | `/convergence-review` — skeptical code reviewer |
+| Security Agent | 14 | `/convergence-security` — vulnerability scanner |
 
 ### Safety Hooks
 
@@ -94,12 +94,12 @@ Keep your active instruction total under 60 per session. CLAUDE.md, system promp
 
 | Combination | Total Instructions |
 |------------|-------------------|
-| `/research` alone | 18 |
-| `/design` alone | 22 |
-| `/implement` + `/tdd` | 38 |
-| `/review` alone | 28 |
-| `/review` + `/security` | 58 |
-| `/debug` + `/tdd` | 34 |
+| `/convergence-research` alone | 18 |
+| `/convergence-design` alone | 22 |
+| `/convergence-implement` + `/convergence-tdd` | 38 |
+| `/convergence-review` alone | 28 |
+| `/convergence-review` + `/convergence-security` | 58 |
+| `/convergence-debug` + `/convergence-tdd` | 34 |
 
 ## Where It Comes From
 
@@ -126,11 +126,11 @@ The `docs/` directory contains the full analysis chain:
 
 Don't install everything at once. Follow the trust ladder:
 
-1. **Start with** `/review` + `/debug` + safety hooks — immediate value, no workflow change
-2. **Add** `/design` for complex features — highest leverage single skill
-3. **Add** `/research` + `/outline` for large features — prevents bias and horizontal plans
-4. **Add** `/tdd` + `/security` as needed — invoke when the situation calls for it
-5. **Add** `/architecture` for periodic health checks
+1. **Start with** `/convergence-review` + `/convergence-debug` + safety hooks — immediate value, no workflow change
+2. **Add** `/convergence-design` for complex features — highest leverage single skill
+3. **Add** `/convergence-research` + `/convergence-outline` for large features — prevents bias and horizontal plans
+4. **Add** `/convergence-tdd` + `/convergence-security` as needed — invoke when the situation calls for it
+5. **Add** `/convergence-architecture` for periodic health checks
 
 ## License
 
