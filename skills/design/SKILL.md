@@ -1,6 +1,6 @@
 ---
 name: convergence-design
-description: "Collaborative alignment discussion with the human. Use after /research (or directly for smaller features). Produces a ~200-line design document. The human makes all design decisions — the agent surfaces assumptions, patterns, and open questions."
+description: "Collaborative alignment discussion with the human. Use after /convergence-research (or directly for smaller features). Produces a ~200-line design document. The human makes all design decisions — the agent surfaces assumptions, patterns, and open questions."
 ---
 
 # Design Discussion
@@ -17,7 +17,7 @@ No exceptions. Not even for "simple" changes. Simple changes are where unexamine
 
 ## When to Use
 
-- After `/research` for larger features
+- After `/convergence-research` for larger features
 - Directly (without research) for well-understood changes
 - Any time you're about to write code that touches multiple files or introduces new patterns
 
@@ -111,5 +111,5 @@ Ask the human to review and approve before proceeding.
 | Writing the design without asking questions | Outsources thinking to the agent | Ask questions, let the human decide |
 | Asking 5 questions at once | Overwhelms, gets shallow answers | One at a time |
 | "I'll just start coding, it's simple" | Simple changes have hidden assumptions | Write a short design (even 20 lines) and get approval |
-| Including implementation details | Design is "where are we going," not "how do we get there" | Save implementation for /outline |
+| Including implementation details | Design is "where are we going," not "how do we get there" | Save implementation for /convergence-outline |
 | Silently following a bad pattern | The human might not know the pattern exists | Surface it and ask |

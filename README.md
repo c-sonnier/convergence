@@ -2,7 +2,7 @@
 
 A consolidated set of skills, agents, and workflows for [Claude Code](https://claude.ai/code). Distilled from 6 open-source repos and validated against findings from the Coding Agents Summit 2026.
 
-239+ original items → 14 focused tools. Every skill stays under 35 instructions.
+239+ original items → 15 focused tools. Every skill stays under 35 instructions.
 
 ## Install
 
@@ -41,7 +41,7 @@ Use these sequentially for features. Each phase writes a static artifact file �
 ```
 Small feature:    /convergence-design → /convergence-implement → /convergence-review
 Large feature:    /convergence-research → /convergence-design → /convergence-outline → /convergence-implement → /convergence-review
-Bug fix:          /convergence-debug → /convergence-tdd
+Bug fix:          /convergence-debug → /convergence-tdd → /convergence-compound (if non-obvious)
 Pre-ship:         /convergence-review + /convergence-security
 ```
 
@@ -53,6 +53,7 @@ Use standalone, whenever the situation calls for them.
 |-------|-------------|---------|
 | `/convergence-debug` | 20 | Systematic root cause investigation. No fixes without understanding |
 | `/convergence-tdd` | 14 | Test-driven development. Red-green-refactor |
+| `/convergence-compound` | 12 | Capture learnings after solving non-trivial problems |
 | `/convergence-security` | 30 | Three-layer security audit: access, logging, scanning |
 | `/convergence-architecture` | 22 | Layer analysis, callback scoring, god object detection, quality gates |
 
@@ -65,6 +66,7 @@ Dispatched automatically by skills. You don't invoke these directly.
 | Research Agent | 10 | `/convergence-research` — runs ticket-blind in fresh context |
 | Review Agent | 12 | `/convergence-review` — skeptical code reviewer |
 | Security Agent | 14 | `/convergence-security` — vulnerability scanner |
+| Learnings Researcher | 10 | `/convergence-research`, `/convergence-debug` — surfaces past learnings |
 
 ### Safety Hooks
 
@@ -100,6 +102,7 @@ Keep your active instruction total under 60 per session. CLAUDE.md, system promp
 | `/convergence-review` alone | 28 |
 | `/convergence-review` + `/convergence-security` | 58 |
 | `/convergence-debug` + `/convergence-tdd` | 34 |
+| `/convergence-debug` + `/convergence-compound` | 32 |
 
 ## Where It Comes From
 
@@ -130,7 +133,8 @@ Don't install everything at once. Follow the trust ladder:
 2. **Add** `/convergence-design` for complex features — highest leverage single skill
 3. **Add** `/convergence-research` + `/convergence-outline` for large features — prevents bias and horizontal plans
 4. **Add** `/convergence-tdd` + `/convergence-security` as needed — invoke when the situation calls for it
-5. **Add** `/convergence-architecture` for periodic health checks
+5. **Add** `/convergence-compound` after non-obvious bugs or surprises — builds institutional knowledge over time
+6. **Add** `/convergence-architecture` for periodic health checks
 
 ## License
 

@@ -30,6 +30,10 @@ Use this ESPECIALLY when under time pressure. Systematic debugging is faster tha
 
 Complete each phase before proceeding to the next.
 
+### Phase 0 — Check Past Learnings
+
+Before investigating, dispatch the `learnings-researcher` agent with the error or symptom description. If a past learning matches, it may shortcut the investigation. Past learnings are hints, not answers — still verify against the current codebase.
+
 ### Phase 1 — Root Cause Investigation
 
 **Before attempting ANY fix:**
@@ -58,6 +62,14 @@ Complete each phase before proceeding to the next.
 3. **Identify every difference** between working and broken, however small. Don't assume "that can't matter."
 4. **Understand dependencies.** What other components, settings, environment does this need?
 
+### Causal Chain Gate
+
+Before proposing any fix, explain the full chain from trigger to symptom. Every link must be accounted for:
+
+> "A happens → which causes B → which causes C (the symptom we see)"
+
+No gaps allowed. No "somehow A leads to C." If a link is uncertain, state a prediction: "If B is really the cause, then we should also see X." Test the prediction. If the prediction is wrong, the link is wrong — go back.
+
 ### Phase 3 — Hypothesis and Testing
 
 1. **Form a single hypothesis.** State it clearly: "I think X is the root cause because Y." Write it down.
@@ -71,7 +83,15 @@ Complete each phase before proceeding to the next.
 3. **Verify.** Test passes? Other tests still pass? Issue actually resolved?
 4. **If fix doesn't work:**
    - Attempts < 3: Return to Phase 1 with new information
-   - **Attempts >= 3: STOP.** This signals an architectural problem, not a code bug. Discuss with the human before attempting more.
+   - **Attempts >= 3: STOP.** Classify the failure:
+     - Hypotheses point to different subsystems → likely a design/architecture problem, suggest `/convergence-architecture`
+     - Evidence contradicts itself → wrong mental model, step back and re-read everything from scratch
+     - Works locally, fails in CI/prod → environment problem, compare configs
+     - Fix works but prediction was wrong → you fixed a symptom, real cause still active
+   - Discuss with the human before attempting more.
+5. **Defense-in-depth check.** After confirming the fix, grep for the same root cause pattern in other files. If found, flag: "Same pattern exists in [files]. Worth fixing there too?"
+
+6. **Compound nudge.** If the root cause was non-obvious (required 3+ hypotheses or architectural escalation), suggest: "This was a non-trivial root cause. Consider running `/convergence-compound` to capture what was learned."
 
 ## Red Flags — STOP and Return to Phase 1
 

@@ -1,6 +1,6 @@
 ---
 name: convergence-implement
-description: "Execute outline phases with verification checkpoints. Use after /outline approval. Works through each phase sequentially: write tests first, implement, verify, commit. Stops and asks the human if 3+ fix attempts fail on any phase."
+description: "Execute outline phases with verification checkpoints. Use after /convergence-outline approval. Works through each phase sequentially: write tests first, implement, verify, commit. Stops and asks the human if 3+ fix attempts fail on any phase."
 ---
 
 # Implement
@@ -17,9 +17,9 @@ Work through the outline phase by phase. Each phase follows TDD (test first, the
 
 ## When to Use
 
-- After `/outline` approval for structured features
-- After `/design` approval when skipping outline (smaller features)
-- After `/debug` identifies a fix (use Phase 4 directly)
+- After `/convergence-outline` approval for structured features
+- After `/convergence-design` approval when skipping outline (smaller features)
+- After `/convergence-debug` identifies a fix (use Phase 4 directly)
 
 ## Process
 

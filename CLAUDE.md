@@ -30,6 +30,7 @@ When the user's request matches a skill, invoke it. Do not load multiple workflo
 |---------|-------|----------|
 | `/debug` | `convergence:debug` | Any bug, test failure, or unexpected behavior |
 | `/tdd` | `convergence:tdd` | Writing new features or fixing bugs with tests |
+| `/compound` | `convergence:compound` | After solving a non-trivial problem. Captures learnings |
 | `/security` | `convergence:security` | Security audit before shipping |
 | `/architecture` | `convergence:architecture` | Architecture analysis, health check, onboarding |
 
@@ -37,7 +38,7 @@ When the user's request matches a skill, invoke it. Do not load multiple workflo
 
 - **Small feature**: `/design` > `/implement` > `/review`
 - **Large feature**: `/research` > `/design` > `/outline` > `/implement` > `/review`
-- **Bug fix**: `/debug` > `/tdd`
+- **Bug fix**: `/debug` > `/tdd` > `/compound` (if root cause was non-obvious)
 - **Pre-ship**: `/review` + `/security`
 - **Codebase health**: `/architecture`
 
@@ -48,6 +49,7 @@ Agents are dispatched by skills, not invoked directly. Each runs in its own cont
 - **Research Agent** — Ticket-blind codebase explorer. Dispatched by `/research`.
 - **Review Agent** — Code quality reviewer. Defaults to "NEEDS WORK." Dispatched by `/review`.
 - **Security Agent** — Vulnerability scanner. Dispatched by `/security`.
+- **Learnings Researcher** — Searches past learnings for relevant solutions. Dispatched by `/research` and `/debug`.
 
 ## Artifact Locations
 
@@ -60,4 +62,5 @@ Skills write artifacts to these paths (create directories as needed):
 | Outline | `docs/convergence/outline/YYYY-MM-DD-<topic>-outline.md` |
 | Review | `docs/convergence/reviews/YYYY-MM-DD-<topic>-review.md` |
 | Architecture | `docs/convergence/architecture/YYYY-MM-DD-analysis.md` |
+| Learnings | `docs/convergence/learnings/YYYY-MM-DD-<slug>.md` |
 | Security | `docs/convergence/security/YYYY-MM-DD-audit.md` |

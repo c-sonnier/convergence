@@ -17,7 +17,7 @@ If the output contains "should," "could," "recommend," or "I suggest" — delete
 
 ## When to Use
 
-- Before `/design` on any non-trivial feature
+- Before `/convergence-design` on any non-trivial feature
 - When onboarding to an unfamiliar area of the codebase
 - When you need to understand how something works before changing it
 
@@ -33,6 +33,10 @@ Example: For "add endpoint to reticulate splines across tenants":
 - How does multi-tenancy work? How are tenant boundaries enforced?
 
 **Write questions only. Do not start researching yet.**
+
+### Step 1.5 — Check Past Learnings
+
+Before researching, dispatch the `learnings-researcher` agent with the topic description. If relevant learnings exist in `docs/convergence/learnings/`, include them as context alongside the codebase research. Past learnings are supplementary — they don't replace codebase exploration.
 
 ### Step 2 — Research (ticket-blind)
 

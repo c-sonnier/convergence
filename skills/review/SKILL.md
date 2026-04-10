@@ -16,7 +16,7 @@ Change only with clear evidence of readiness.
 
 ## When to Use
 
-- After `/implement` completes
+- After `/convergence-implement` completes
 - When asked to review a PR or diff
 - Before merging any branch
 
@@ -121,6 +121,10 @@ Verdict: [APPROVED / NEEDS WORK]
 ## Test Results
 [Command run, output summary]
 ```
+
+### Step 6 — Compound Nudge
+
+If the review surfaced surprising must-fix findings (issues the author likely didn't anticipate), suggest: "This review found non-obvious issues. Consider running `/convergence-compound` to capture these as learnings."
 
 ## Anti-Patterns
 

@@ -1,6 +1,6 @@
 ---
 name: convergence-outline
-description: "Vertical structure outline with phases and checkpoints. Use after /design approval. Produces a ~2-page outline showing phases, file changes, signatures, and verification steps. Enforces vertical slicing — each phase is end-to-end testable."
+description: "Vertical structure outline with phases and checkpoints. Use after /convergence-design approval. Produces a ~2-page outline showing phases, file changes, signatures, and verification steps. Enforces vertical slicing — each phase is end-to-end testable."
 ---
 
 # Structure Outline
@@ -17,7 +17,7 @@ Models default to horizontal plans (all DB, then all services, then all frontend
 
 ## When to Use
 
-- After `/design` approval for multi-phase features
+- After `/convergence-design` approval for multi-phase features
 - Skip for single-file changes or bug fixes
 
 ## Process

@@ -17,7 +17,7 @@ mkdir -p "$SKILLS_DIR"
 mkdir -p "$AGENTS_DIR"
 
 # Install skills
-SKILLS=(research design outline implement review debug tdd security architecture)
+SKILLS=(research design outline implement review debug tdd compound security architecture)
 
 for skill in "${SKILLS[@]}"; do
   target="$SKILLS_DIR/convergence-${skill}"
@@ -33,7 +33,7 @@ done
 echo ""
 
 # Install agents
-AGENTS=(research-agent review-agent security-agent)
+AGENTS=(research-agent review-agent security-agent learnings-researcher)
 
 for agent in "${AGENTS[@]}"; do
   target="$AGENTS_DIR/convergence-${agent}.md"
