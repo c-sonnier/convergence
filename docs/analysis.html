@@ -207,6 +207,7 @@
   .pill-co { background: #d2a8ff22; color: #d2a8ff; }
   .pill-pk { background: #f0883e22; color: #f0883e; }
   .pill-rc { background: #79c0ff22; color: #79c0ff; }
+  .pill-ce { background: #38BDF822; color: #38BDF8; }
   .overlap-item p { color: var(--text-muted); font-size: 0.85rem; }
 
   /* Strength bars */
@@ -327,7 +328,7 @@
 <div class="hero">
   <div class="container">
     <h1>Claude Code Skills & Agent Repos</h1>
-    <p>Comparative analysis of 6 open-source repositories for Claude Code configuration, skills, agents, and workflows. Built for you to find what's worth borrowing.</p>
+    <p>Comparative analysis of 7 open-source repositories for Claude Code configuration, skills, agents, and workflows. Built for you to find what's worth borrowing.</p>
     <div class="summit-banner">
       <div class="icon">&#9888;</div>
       <div class="text">
@@ -355,7 +356,7 @@
 <section id="overview">
   <div class="container">
     <h2>Repo Overview</h2>
-    <p class="section-desc">Six repos, six different approaches to making Claude Code smarter.</p>
+    <p class="section-desc">Seven repos, seven different approaches to making Claude Code smarter.</p>
 
     <div class="card-grid">
 
@@ -456,6 +457,23 @@
         </div>
       </div>
 
+      <div class="card">
+        <h3>compound-engineering</h3>
+        <div class="author">Every, Inc. &middot; Production engineering plugin</div>
+        <div>
+          <span class="tag general">General Purpose</span>
+          <span class="tag workflow">Workflow</span>
+          <span class="tag multi-tool">Multi-tool</span>
+          <span class="tag review">Review</span>
+        </div>
+        <p>A massive multi-platform transpiler with 42 skills, 50+ agents, and knowledge compounding. The only repo to implement persistent learning across sessions via a learnings-researcher agent and compound skill.</p>
+        <div class="stats">
+          <span><strong>42</strong> skills</span>
+          <span><strong>50+</strong> agents</span>
+          <span><strong>4</strong> platforms</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -464,7 +482,7 @@
 <section id="comparison">
   <div class="container">
     <h2>Feature Comparison Matrix</h2>
-    <p class="section-desc">Side-by-side capabilities across all six repos.</p>
+    <p class="section-desc">Side-by-side capabilities across all seven repos.</p>
 
     <div class="table-wrap">
       <table>
@@ -477,6 +495,7 @@
             <th>counselors</th>
             <th>palkan/skills</th>
             <th>rails-conventions</th>
+            <th>compound-engineering</th>
           </tr>
         </thead>
         <tbody>
@@ -488,6 +507,7 @@
             <td>Multi-model review</td>
             <td>Rails architecture</td>
             <td>Rails 8 conventions</td>
+            <td>General + learning</td>
           </tr>
           <tr>
             <td><strong>Skills/Commands</strong></td>
@@ -497,6 +517,7 @@
             <td class="yes">12+ commands</td>
             <td class="yes">6 commands</td>
             <td class="partial">1 skill</td>
+            <td class="yes">42 skills</td>
           </tr>
           <tr>
             <td><strong>Agents</strong></td>
@@ -506,6 +527,7 @@
             <td class="no">None (adapters)</td>
             <td class="yes">2 agents</td>
             <td class="no">None</td>
+            <td class="yes">50+ agents</td>
           </tr>
           <tr>
             <td><strong>Workflow Engine</strong></td>
@@ -515,6 +537,7 @@
             <td class="partial">Run/Loop dispatch</td>
             <td class="partial">Analyze &rarr; Review &rarr; Gradual</td>
             <td class="no">Reference only</td>
+            <td class="yes">Multi-stage pipelines + compound loop</td>
           </tr>
           <tr>
             <td><strong>Code Review</strong></td>
@@ -524,6 +547,7 @@
             <td class="yes">Multi-model comparison</td>
             <td class="yes">Layer violation detection</td>
             <td class="partial">Guidelines only</td>
+            <td class="yes">Multiple specialized reviewers</td>
           </tr>
           <tr>
             <td><strong>Testing Philosophy</strong></td>
@@ -533,6 +557,7 @@
             <td class="partial">Bug hunt presets</td>
             <td class="yes">Specification test</td>
             <td class="yes">Minitest + fixtures</td>
+            <td class="yes">TDD + spec-flow analysis</td>
           </tr>
           <tr>
             <td><strong>Security</strong></td>
@@ -542,11 +567,13 @@
             <td class="yes">Security preset</td>
             <td class="no">&mdash;</td>
             <td class="yes">Checklist (09)</td>
+            <td class="yes">Security sentinel agent</td>
           </tr>
           <tr>
             <td><strong>Browser Automation</strong></td>
             <td class="no">&mdash;</td>
             <td class="yes">Persistent Chromium daemon</td>
+            <td class="no">&mdash;</td>
             <td class="no">&mdash;</td>
             <td class="no">&mdash;</td>
             <td class="no">&mdash;</td>
@@ -560,6 +587,7 @@
             <td class="yes">Claude+Codex+Gemini+Amp</td>
             <td class="no">&mdash;</td>
             <td class="no">&mdash;</td>
+            <td class="no">&mdash;</td>
           </tr>
           <tr>
             <td><strong>Multi-Tool Compat</strong></td>
@@ -569,6 +597,7 @@
             <td class="yes">5 CLIs</td>
             <td class="partial">Claude Code plugin</td>
             <td class="partial">Agent Skills runtime</td>
+            <td class="yes">Claude, Cursor, Windsurf, VS Code</td>
           </tr>
           <tr>
             <td><strong>Hooks / Safety</strong></td>
@@ -578,11 +607,13 @@
             <td class="yes">Read-only enforcement</td>
             <td class="no">&mdash;</td>
             <td class="no">&mdash;</td>
+            <td class="partial">Destructive cmd warnings</td>
           </tr>
           <tr>
             <td><strong>Telemetry</strong></td>
             <td class="no">&mdash;</td>
             <td class="yes">Opt-in, privacy-first</td>
+            <td class="no">&mdash;</td>
             <td class="no">&mdash;</td>
             <td class="no">&mdash;</td>
             <td class="no">&mdash;</td>
@@ -596,6 +627,7 @@
             <td class="no">&mdash;</td>
             <td class="partial">Acknowledged, not primary</td>
             <td class="yes">Core philosophy</td>
+            <td class="no">&mdash;</td>
           </tr>
           <tr>
             <td><strong>Hotwire / Turbo</strong></td>
@@ -605,6 +637,7 @@
             <td class="no">&mdash;</td>
             <td class="no">&mdash;</td>
             <td class="yes">Reference guide</td>
+            <td class="no">&mdash;</td>
           </tr>
           <tr>
             <td><strong>Background Jobs</strong></td>
@@ -614,6 +647,17 @@
             <td class="no">&mdash;</td>
             <td class="partial">Active Job patterns</td>
             <td class="yes">good_job + solid_queue</td>
+            <td class="no">&mdash;</td>
+          </tr>
+          <tr>
+            <td><strong>Knowledge Compounding</strong></td>
+            <td class="no">&mdash;</td>
+            <td class="no">&mdash;</td>
+            <td class="no">&mdash;</td>
+            <td class="no">&mdash;</td>
+            <td class="no">&mdash;</td>
+            <td class="no">&mdash;</td>
+            <td class="yes">ce:compound + learnings-researcher</td>
           </tr>
           <tr>
             <td><strong>Deployment</strong></td>
@@ -623,9 +667,11 @@
             <td class="no">&mdash;</td>
             <td class="no">&mdash;</td>
             <td class="no">&mdash;</td>
+            <td class="no">&mdash;</td>
           </tr>
           <tr>
             <td><strong>License</strong></td>
+            <td>MIT</td>
             <td>MIT</td>
             <td>MIT</td>
             <td>MIT</td>
@@ -653,8 +699,9 @@
           <span class="repo-pill pill-sp">superpowers-ruby</span>
           <span class="repo-pill pill-gs">gstack</span>
           <span class="repo-pill pill-aa">agency-agents</span>
+          <span class="repo-pill pill-ce">compound-engineering</span>
         </div>
-        <p>All three implement phased pipelines where you don't jump straight to coding. superpowers-ruby gates on brainstorming and planning. gstack has a 7-phase sprint. NEXUS runs 7 phases from discovery to operations. The consensus: <strong>structured process beats ad-hoc prompting</strong>.</p>
+        <p>All four implement phased pipelines where you don't jump straight to coding. superpowers-ruby gates on brainstorming and planning. gstack has a 7-phase sprint. NEXUS runs 7 phases from discovery to operations. compound-engineering adds a knowledge compounding loop. The consensus: <strong>structured process beats ad-hoc prompting</strong>.</p>
       </div>
 
       <div class="overlap-item">
@@ -665,8 +712,9 @@
           <span class="repo-pill pill-aa">agency-agents</span>
           <span class="repo-pill pill-co">counselors</span>
           <span class="repo-pill pill-pk">palkan/skills</span>
+          <span class="repo-pill pill-ce">compound-engineering</span>
         </div>
-        <p>5 of 6 repos have dedicated review capabilities. superpowers-ruby uses two-stage review (spec compliance + code quality). gstack provides staff-engineer-level PR review. counselors gets independent perspectives from multiple models on the same diff. palkan detects layer violations. This is clearly essential infrastructure.</p>
+        <p>6 of 7 repos have dedicated review capabilities. superpowers-ruby uses two-stage review (spec compliance + code quality). gstack provides staff-engineer-level PR review. counselors gets independent perspectives from multiple models on the same diff. palkan detects layer violations. compound-engineering has multiple specialized reviewers (Rails, TypeScript, Python, security, architecture). This is clearly essential infrastructure.</p>
       </div>
 
       <div class="overlap-item">
@@ -686,8 +734,9 @@
           <span class="repo-pill pill-gs">gstack</span>
           <span class="repo-pill pill-aa">agency-agents</span>
           <span class="repo-pill pill-co">counselors</span>
+          <span class="repo-pill pill-ce">compound-engineering</span>
         </div>
-        <p>Four repos tackle multi-agent coordination differently. superpowers-ruby isolates subagent context carefully. gstack runs parallel review agents. agency-agents' NEXUS is the most ambitious (150+ agents across 7 phases). counselors takes a unique approach: same prompt, different models, compare results. Different strategies, same insight: <strong>one agent isn't enough</strong>.</p>
+        <p>Five repos tackle multi-agent coordination differently. superpowers-ruby isolates subagent context carefully. gstack runs parallel review agents. agency-agents' NEXUS is the most ambitious (150+ agents across 7 phases). counselors takes a unique approach: same prompt, different models, compare results. compound-engineering dispatches 50+ specialized agents. Different strategies, same insight: <strong>one agent isn't enough</strong>.</p>
       </div>
 
       <div class="overlap-item">
@@ -696,8 +745,9 @@
           <span class="repo-pill pill-sp">superpowers-ruby</span>
           <span class="repo-pill pill-gs">gstack</span>
           <span class="repo-pill pill-aa">agency-agents</span>
+          <span class="repo-pill pill-ce">compound-engineering</span>
         </div>
-        <p>All three enforce "prove it, don't claim it." superpowers-ruby has a dedicated verification-before-completion skill (no claims without fresh evidence). gstack's QA generates regression tests for every fix. agency-agents' Reality Checker defaults to "NEEDS WORK" until proven otherwise. <strong>Trust but verify</strong> is table stakes.</p>
+        <p>All four enforce "prove it, don't claim it." superpowers-ruby has a dedicated verification-before-completion skill (no claims without fresh evidence). gstack's QA generates regression tests for every fix. agency-agents' Reality Checker defaults to "NEEDS WORK" until proven otherwise. compound-engineering's reviewers default to "NEEDS WORK" as well. <strong>Trust but verify</strong> is table stakes.</p>
       </div>
 
       <div class="overlap-item">
@@ -726,8 +776,9 @@
           <span class="repo-pill pill-gs">gstack</span>
           <span class="repo-pill pill-pk">palkan/skills</span>
           <span class="repo-pill pill-rc">rails-conventions</span>
+          <span class="repo-pill pill-ce">compound-engineering</span>
         </div>
-        <p>superpowers-ruby enforces strict TDD (red-green-refactor always, "Iron Law"). gstack runs QA with tiered severity and auto-generates regression tests. palkan uses the "specification test" as a design tool to detect layer violations. rails-conventions mandates minitest + fixtures. All agree: <strong>tests aren't optional</strong>.</p>
+        <p>superpowers-ruby enforces strict TDD (red-green-refactor always, "Iron Law"). gstack runs QA with tiered severity and auto-generates regression tests. palkan uses the "specification test" as a design tool to detect layer violations. rails-conventions mandates minitest + fixtures. compound-engineering adds spec-flow analysis for completeness gaps. All agree: <strong>tests aren't optional</strong>.</p>
       </div>
 
       <div class="overlap-item">
@@ -747,8 +798,17 @@
           <span class="repo-pill pill-gs">gstack</span>
           <span class="repo-pill pill-co">counselors</span>
           <span class="repo-pill pill-rc">rails-conventions</span>
+          <span class="repo-pill pill-ce">compound-engineering</span>
         </div>
-        <p>superpowers-ruby integrates Brakeman for Rails-specific static analysis. gstack's /cso does OWASP Top 10 + STRIDE threat modeling. counselors has a security preset for multi-model review. rails-conventions provides a manual checklist. Multiple approaches, universal concern.</p>
+        <p>superpowers-ruby integrates Brakeman for Rails-specific static analysis. gstack's /cso does OWASP Top 10 + STRIDE threat modeling. counselors has a security preset for multi-model review. rails-conventions provides a manual checklist. compound-engineering has a dedicated security sentinel agent. Multiple approaches, universal concern.</p>
+      </div>
+
+      <div class="overlap-item">
+        <h4>Knowledge Compounding</h4>
+        <div class="repos">
+          <span class="repo-pill pill-ce">compound-engineering</span>
+        </div>
+        <p>Only one repo addresses persistent learning across sessions. compound-engineering's <code>ce:compound</code> skill captures learnings after work; its <code>learnings-researcher</code> agent surfaces them before new work. No other repo attempts this, despite it being identified as a critical gap by the Coding Agents Summit.</p>
       </div>
 
     </div>
@@ -941,6 +1001,36 @@
       </div>
     </details>
 
+    <details class="deep-dive">
+      <summary><span style="color: #38BDF8;">compound-engineering</span> &mdash; The Knowledge Compounder</summary>
+      <div class="content">
+        <h4>What Makes It Unique</h4>
+        <ul>
+          <li><strong>Knowledge compounding loop</strong> &mdash; <code>ce:compound</code> captures learnings after work; <code>learnings-researcher</code> surfaces them before new work. The only repo to implement persistent learning across sessions</li>
+          <li><strong>42 skills across 4 platforms</strong> &mdash; Claude Code, Cursor, Windsurf, VS Code transpiler. Most comprehensive multi-platform support</li>
+          <li><strong>50+ specialized agents</strong> &mdash; Reviewers for Rails, Python, TypeScript, frontend race conditions, architecture, security, data integrity, deployment verification</li>
+          <li><strong>Spec-flow analysis</strong> &mdash; Analyzes specifications for user flow completeness, gap identification, and edge case discovery</li>
+          <li><strong>Design-to-implementation sync</strong> &mdash; Figma design comparison agents for visual fidelity verification</li>
+          <li><strong>Destructive command hooks</strong> &mdash; Warns before rm -rf, DROP TABLE, git push --force, git reset --hard</li>
+        </ul>
+        <h4>Key Patterns Worth Studying</h4>
+        <ul>
+          <li><strong>ce:compound</strong> &mdash; 530-line skill with 3 modes, YAML frontmatter for searchable learnings with tags, module, severity</li>
+          <li><strong>learnings-researcher</strong> &mdash; Agent that searches past learnings by frontmatter metadata and body text before new work</li>
+          <li><strong>Specialized review agents</strong> &mdash; Different reviewers for different domains (Rails conventions, TypeScript patterns, frontend race conditions, security)</li>
+          <li><strong>Bug reproduction validator</strong> &mdash; Systematically reproduces bug reports before attempting fixes</li>
+        </ul>
+        <h4>Weaknesses</h4>
+        <ul>
+          <li>42 skills at 100-530 lines each blows the instruction budget (summit finding: &lt;35 per skill)</li>
+          <li>50+ agents = overwhelming surface area, no clear entry point</li>
+          <li>Heavy plans and multi-agent pipelines contradict summit findings on plan leverage</li>
+          <li>Multi-platform transpiler adds complexity without clear benefit (each platform has its own conventions)</li>
+          <li>Most patterns already covered by other repos &mdash; the unique contribution is knowledge compounding</li>
+        </ul>
+      </div>
+    </details>
+
   </div>
 </section>
 
@@ -977,6 +1067,10 @@
           <label>counselors <span>1/10</span></label>
           <div class="bar-bg"><div class="bar-fill" style="width: 10%; background: #d2a8ff;"></div></div>
         </div>
+        <div class="strength-row">
+          <label>compound-engineering <span>1/10</span></label>
+          <div class="bar-bg"><div class="bar-fill" style="width: 10%; background: #38BDF8;"></div></div>
+        </div>
       </div>
 
       <div class="card">
@@ -1004,6 +1098,10 @@
         <div class="strength-row">
           <label>rails-conventions <span>1/10</span></label>
           <div class="bar-bg"><div class="bar-fill" style="width: 10%; background: #79c0ff;"></div></div>
+        </div>
+        <div class="strength-row">
+          <label>compound-engineering <span>8/10</span></label>
+          <div class="bar-bg"><div class="bar-fill" style="width: 80%; background: #38BDF8;"></div></div>
         </div>
       </div>
 
@@ -1033,6 +1131,10 @@
           <label>rails-conventions <span>1/10</span></label>
           <div class="bar-bg"><div class="bar-fill" style="width: 10%; background: #79c0ff;"></div></div>
         </div>
+        <div class="strength-row">
+          <label>compound-engineering <span>7/10</span></label>
+          <div class="bar-bg"><div class="bar-fill" style="width: 70%; background: #38BDF8;"></div></div>
+        </div>
       </div>
 
       <div class="card">
@@ -1060,6 +1162,10 @@
         <div class="strength-row">
           <label>rails-conventions <span>1/10</span></label>
           <div class="bar-bg"><div class="bar-fill" style="width: 10%; background: #79c0ff;"></div></div>
+        </div>
+        <div class="strength-row">
+          <label>compound-engineering <span>5/10</span></label>
+          <div class="bar-bg"><div class="bar-fill" style="width: 50%; background: #38BDF8;"></div></div>
         </div>
       </div>
 
@@ -1089,6 +1195,10 @@
           <label>agency-agents <span>4/10</span></label>
           <div class="bar-bg"><div class="bar-fill" style="width: 40%; background: #3fb950;"></div></div>
         </div>
+        <div class="strength-row">
+          <label>compound-engineering <span>3/10</span></label>
+          <div class="bar-bg"><div class="bar-fill" style="width: 30%; background: #38BDF8;"></div></div>
+        </div>
       </div>
 
       <div class="card">
@@ -1116,6 +1226,10 @@
         <div class="strength-row">
           <label>agency-agents <span>1/10</span></label>
           <div class="bar-bg"><div class="bar-fill" style="width: 10%; background: #3fb950;"></div></div>
+        </div>
+        <div class="strength-row">
+          <label>compound-engineering <span>2/10</span></label>
+          <div class="bar-bg"><div class="bar-fill" style="width: 20%; background: #38BDF8;"></div></div>
         </div>
       </div>
 
@@ -1145,6 +1259,10 @@
           <label>palkan/skills <span>4/10</span></label>
           <div class="bar-bg"><div class="bar-fill" style="width: 40%; background: #f0883e;"></div></div>
         </div>
+        <div class="strength-row">
+          <label>compound-engineering <span>9/10</span></label>
+          <div class="bar-bg"><div class="bar-fill" style="width: 90%; background: #38BDF8;"></div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1160,7 +1278,7 @@
 
       <div class="callout" style="border-color: #ff6b6b;">
         <h4 style="color: #ff6b6b;">1. These repos solve different problems</h4>
-        <p>They look similar on the surface but serve distinct purposes. <strong>superpowers-ruby</strong>, <strong>palkan/skills</strong>, and <strong>rails-conventions</strong> are Rails-specific knowledge bases. <strong>gstack</strong> is a general-purpose workflow engine. <strong>agency-agents</strong> is an agent persona library. <strong>counselors</strong> is a multi-model orchestration tool. A custom setup would cherry-pick from multiple categories.</p>
+        <p>They look similar on the surface but serve distinct purposes. <strong>superpowers-ruby</strong>, <strong>palkan/skills</strong>, and <strong>rails-conventions</strong> are Rails-specific knowledge bases. <strong>gstack</strong> is a general-purpose workflow engine. <strong>agency-agents</strong> is an agent persona library. <strong>counselors</strong> is a multi-model orchestration tool. <strong>compound-engineering</strong> is a knowledge compounding system. A custom setup would cherry-pick from multiple categories.</p>
       </div>
 
       <div class="callout" style="border-color: #58a6ff;">
@@ -1170,7 +1288,7 @@
 
       <div class="callout" style="border-color: #3fb950;">
         <h4 style="color: #3fb950;">3. Code review is universally valued</h4>
-        <p>5 of 6 repos invest heavily in review capabilities. The approaches vary (spec compliance, layer violations, multi-model comparison, staff-engineer mode) but the message is clear: agents reviewing agents' work catches things single-pass doesn't. Build review into your workflow early.</p>
+        <p>6 of 7 repos invest heavily in review capabilities. The approaches vary (spec compliance, layer violations, multi-model comparison, staff-engineer mode, specialized domain reviewers) but the message is clear: agents reviewing agents' work catches things single-pass doesn't. Build review into your workflow early.</p>
       </div>
 
       <div class="callout" style="border-color: #d2a8ff;">
@@ -1180,7 +1298,7 @@
 
       <div class="callout" style="border-color: #f0883e;">
         <h4 style="color: #f0883e;">5. Don't adopt everything at once</h4>
-        <p>superpowers-ruby has 28 skills. gstack has 28 commands. agency-agents has 150+ personas. Adopting all of any of these would be overwhelming. Start with: (1) a workflow skill matching your process, (2) a review skill, (3) domain-specific reference material for your stack. Add more only when you feel a gap.</p>
+        <p>superpowers-ruby has 28 skills. gstack has 28 commands. agency-agents has 150+ personas. compound-engineering has 42 skills and 50+ agents. Adopting all of any of these would be overwhelming. Start with: (1) a workflow skill matching your process, (2) a review skill, (3) domain-specific reference material for your stack. Add more only when you feel a gap.</p>
       </div>
 
       <div class="callout" style="border-color: #79c0ff;">
@@ -1237,6 +1355,11 @@
               <td>Codebase-first scan philosophy, smart backend detection, quantified code quality gates, reference routing pattern, fail-fast philosophy</td>
               <td>You don't use Rails 8, or you already have strong style guides</td>
             </tr>
+            <tr>
+              <td><strong style="color: #38BDF8;">compound-engineering</strong></td>
+              <td>Knowledge compounding loop (ce:compound + learnings-researcher), destructive command hooks, spec-flow analysis, specialized domain reviewers, bug reproduction validator</td>
+              <td>You don't need persistent learning across sessions, or you find 42 skills overwhelming</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -1247,7 +1370,7 @@
 
 <footer>
   <div class="container">
-    <p>Analysis generated on March 27, 2026. Updated March 30, 2026 with <a href="summit-findings.html" style="color: var(--accent);">Coding Agents Summit findings</a>. All repos are MIT-licensed and actively maintained.</p>
+    <p>Analysis generated on March 27, 2026. Updated March 30, 2026 with <a href="summit-findings.html" style="color: var(--accent);">Coding Agents Summit findings</a>. Updated April 10, 2026 with <a href="https://github.com/EveryInc/compound-engineering-plugin" style="color: var(--accent);">compound-engineering</a> as 7th repo. All repos are MIT-licensed and actively maintained.</p>
   </div>
 </footer>
 
