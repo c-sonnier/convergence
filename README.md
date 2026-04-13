@@ -14,6 +14,12 @@ cd convergence
 
 This symlinks skills and agents into `~/.claude/skills/` and `~/.claude/agents/`. They'll be available in all your Claude Code sessions.
 
+**Alternate config directory** (e.g. a work profile using `CLAUDE_CONFIG_DIR`):
+
+```bash
+CLAUDE_CONFIG_DIR=~/.claude-work ./setup.sh
+```
+
 **Project-level install** (instead of global):
 
 ```bash

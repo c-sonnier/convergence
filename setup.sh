@@ -5,11 +5,13 @@ set -e
 # Installs skills and agents for Claude Code
 
 CONVERGENCE_DIR="$(cd "$(dirname "$0")" && pwd)"
-SKILLS_DIR="$HOME/.claude/skills"
-AGENTS_DIR="$HOME/.claude/agents"
+CLAUDE_CONFIG_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
+SKILLS_DIR="$CLAUDE_CONFIG_DIR/skills"
+AGENTS_DIR="$CLAUDE_CONFIG_DIR/agents"
 
 echo "Convergence — Installing skills and agents"
 echo "============================================"
+echo "Target: $CLAUDE_CONFIG_DIR"
 echo ""
 
 # Create directories
