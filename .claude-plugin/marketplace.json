@@ -1,0 +1,17 @@
+{
+  "name": "csonnier",
+  "owner": {
+    "name": "Chris Sonnier"
+  },
+  "metadata": {
+    "description": "Chris Sonnier's Claude Code plugins",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "convergence",
+      "source": "./plugins/convergence",
+      "description": "Consolidated skills, agents, and workflows for Claude Code. 10 skills + 4 agents + 1 safety hook."
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "convergence",
+  "description": "Consolidated skills, agents, and workflows distilled from 6 open-source repos",
+  "version": "1.0.0",
+  "author": {
+    "name": "Chris Sonnier"
+  },
+  "homepage": "https://github.com/c-sonnier/convergence",
+  "repository": "https://github.com/c-sonnier/convergence",
+  "license": "MIT",
+  "keywords": ["workflow", "tdd", "code-review", "research", "design"]
+}
