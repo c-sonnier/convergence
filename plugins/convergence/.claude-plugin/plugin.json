@@ -5,7 +5,7 @@
   "author": {
     "name": "Chris Sonnier"
   },
-  "homepage": "https://github.com/c-sonnier/convergence",
+  "homepage": "https://csonnier.com/articles/convergence.html",
   "repository": "https://github.com/c-sonnier/convergence",
   "license": "MIT",
   "keywords": ["workflow", "tdd", "code-review", "research", "design"]
