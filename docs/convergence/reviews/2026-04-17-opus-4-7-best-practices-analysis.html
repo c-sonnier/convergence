@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Convergence vs. Opus 4.7 — An Editorial Review</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --paper: #f5f1e8;
+    --rule: #1a1a1a;
+    --accent: #b03a2e;
+    --accent-green: #2f6b3a;
+    --muted: #6b6b6b;
+    --band: #1a1a1a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
+  body {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-size: 18px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid rgba(176,58,46,0.35); }
+  a:hover { border-bottom-color: var(--accent); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 48px 48px 96px; }
+
+  /* Masthead */
+  .masthead {
+    border-top: 6px solid var(--band);
+    border-bottom: 1px solid var(--rule);
+    padding: 18px 0 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .masthead .brand { color: var(--ink); font-weight: 700; letter-spacing: 0.22em; }
+
+  /* Kicker + headline */
+  .kicker {
+    margin-top: 56px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  h1.headline {
+    font-family: "Didot", "Bodoni 72", "Playfair Display", Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(44px, 6.2vw, 84px);
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    margin: 14px 0 18px;
+    max-width: 20ch;
+  }
+  .deck {
+    font-family: "Iowan Old Style", Georgia, serif;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--muted);
+    max-width: 48ch;
+    margin: 0 0 32px;
+  }
+  .byline {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 11px;
+    color: var(--muted);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 12px 0;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .byline strong { color: var(--ink); letter-spacing: 0.18em; }
+
+  /* Update banner */
+  .update-banner {
+    margin-top: 32px;
+    padding: 18px 22px;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    gap: 24px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  .update-banner .label {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--paper);
+    background: var(--accent);
+    padding: 4px 10px;
+  }
+  .update-banner .text {
+    font-family: "Iowan Old Style", Georgia, serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.45;
+    flex: 1;
+    min-width: 280px;
+  }
+
+  /* Lede + columns */
+  .lede {
+    margin-top: 40px;
+    columns: 2;
+    column-gap: 40px;
+    column-rule: 1px solid rgba(0,0,0,0.12);
+    font-size: 18px;
+  }
+  .lede p { margin: 0 0 14px; }
+  .lede p:first-child::first-letter {
+    font-family: "Didot", "Bodoni 72", Georgia, serif;
+    font-weight: 700;
+    float: left;
+    font-size: 84px;
+    line-height: 0.82;
+    padding: 6px 10px 0 0;
+    color: var(--ink);
+  }
+  @media (max-width: 720px) {
+    .lede { columns: 1; }
+    .wrap { padding: 28px 22px 64px; }
+  }
+
+  /* Section headings */
+  h2.section {
+    font-family: "Didot", "Bodoni 72", Georgia, serif;
+    font-size: 34px;
+    line-height: 1.1;
+    margin: 64px 0 8px;
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 10px;
+  }
+  h3.sub {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 12px;
+    color: var(--accent);
+    margin: 28px 0 6px;
+  }
+  .practice-title {
+    font-family: "Didot", "Bodoni 72", Georgia, serif;
+    font-size: 26px;
+    margin: 4px 0 10px;
+    line-height: 1.15;
+  }
+  .practice {
+    padding: 22px 0 22px;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+  }
+  .practice:last-child { border-bottom: none; }
+  .practice .blog, .practice .note, .practice .shipped {
+    font-size: 17px;
+    margin: 8px 0;
+  }
+  .practice .blog::before {
+    content: "BLOG";
+    display: inline-block;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    padding: 2px 6px;
+    margin-right: 10px;
+    vertical-align: 2px;
+  }
+  .practice .note::before {
+    content: "BEFORE";
+    display: inline-block;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--muted);
+    color: var(--paper);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    padding: 2px 6px;
+    margin-right: 10px;
+    vertical-align: 2px;
+  }
+  .practice .shipped::before {
+    content: "SHIPPED";
+    display: inline-block;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: var(--accent-green);
+    color: var(--paper);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    padding: 2px 6px;
+    margin-right: 10px;
+    vertical-align: 2px;
+  }
+  .verdict {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 11px;
+    margin-top: 10px;
+    margin-right: 8px;
+    display: inline-block;
+    padding: 4px 10px;
+    border: 1px solid var(--ink);
+  }
+  .verdict.strong { background: var(--ink); color: var(--paper); }
+  .verdict.gap { background: var(--accent); color: var(--paper); border-color: var(--accent); text-decoration: line-through; text-decoration-thickness: 2px; }
+  .verdict.resolved { background: var(--accent-green); color: var(--paper); border-color: var(--accent-green); }
+  .verdict.mixed { background: transparent; color: var(--ink); }
+  .arrow {
+    display: inline-block;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: var(--muted);
+    margin: 0 2px 0 -4px;
+  }
+
+  /* Pull quote */
+  .pullquote {
+    font-family: "Didot", "Bodoni 72", Georgia, serif;
+    font-size: 32px;
+    line-height: 1.18;
+    color: var(--ink);
+    border-top: 4px solid var(--ink);
+    border-bottom: 4px solid var(--ink);
+    padding: 28px 0;
+    margin: 56px 0;
+    max-width: 28ch;
+  }
+  .pullquote::before { content: "“"; font-size: 54px; line-height: 0; vertical-align: -14px; margin-right: 4px; }
+  .pullquote::after { content: "”"; font-size: 54px; line-height: 0; vertical-align: -24px; margin-left: 4px; }
+
+  /* Scorecard */
+  table.scorecard {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 8px;
+    font-size: 16px;
+  }
+  table.scorecard th, table.scorecard td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(0,0,0,0.18);
+  }
+  table.scorecard th {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 11px;
+    color: var(--muted);
+    border-bottom: 2px solid var(--ink);
+  }
+  .pill {
+    display: inline-block;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+  .pill.strong { background: var(--ink); color: var(--paper); }
+  .pill.gap { background: var(--accent); color: var(--paper); }
+  .pill.resolved { background: var(--accent-green); color: var(--paper); }
+  .pill.mixed { border: 1px solid var(--ink); }
+  .scorecard .before { color: var(--muted); text-decoration: line-through; font-size: 10px; letter-spacing: 0.14em; display: block; margin-bottom: 3px; }
+
+  /* Changelog */
+  ol.changelog { counter-reset: ch; list-style: none; padding: 0; margin: 16px 0; }
+  ol.changelog li {
+    counter-increment: ch;
+    padding: 18px 0 18px 64px;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+    position: relative;
+  }
+  ol.changelog li::before {
+    content: counter(ch, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 14px;
+    font-family: "Didot", "Bodoni 72", Georgia, serif;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--accent-green);
+  }
+  ol.changelog strong {
+    display: block;
+    font-family: "Didot", "Bodoni 72", Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  ol.changelog .files {
+    display: block;
+    margin-top: 6px;
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  code {
+    font-family: "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.9em;
+    background: rgba(0,0,0,0.06);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+
+  /* Colophon */
+  .colophon {
+    margin-top: 80px;
+    padding-top: 18px;
+    border-top: 4px solid var(--ink);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <span class="brand">Convergence Quarterly</span>
+    <span>Vol. I · No. 1 · April 2026</span>
+    <span>Editorial Review · Revised</span>
+  </div>
+
+  <div class="kicker">A Field Report on Model &amp; Method · Revised Edition</div>
+  <h1 class="headline">The Gaps Are Closed.</h1>
+  <p class="deck">A revised editorial audit: what the first reading found, what the second draft shipped, and why one deliberate deviation still stands.</p>
+
+  <div class="byline">
+    <span><strong>By</strong> the Convergence Review Desk</span>
+    <span><strong>Source</strong> claude.com/blog/best-practices</span>
+    <span><strong>Filed</strong> 17 April 2026</span>
+    <span><strong>Revised</strong> 17 April 2026 · Same day</span>
+    <span><strong>Reading time</strong> 7 min</span>
+  </div>
+
+  <div class="update-banner">
+    <span class="label">Stop Press</span>
+    <span class="text">Since this piece first ran, the maintainers shipped four of the five recommendations — parallel research dispatch, effort-level guidance, an Auto-mode section, and adaptive-thinking preambles on five skills. The fifth, a deliberate deviation on design, is now documented in the README rather than argued over. The scorecard has been redrawn accordingly.</span>
+  </div>
+
+  <div class="lede">
+    <p>Convergence was designed against a different model. When its fifteen skills were distilled from six open-source repos, the reference assumption was an agent that would happily spawn subagents and burn tokens in pursuit of certainty. Opus 4.7 is not that agent. It reasons more, calls tools less, and no longer accepts a fixed thinking budget — it decides how hard to think on its own.</p>
+    <p>Our first reading of the repo against Anthropic's published guidance found four silences: no mention of effort levels, no Auto-mode guidance, no adaptive-thinking prompts, and a research workflow that dispatched subagents sequentially. The recommendations at the end of that piece were small and specific. Within the same day, they shipped.</p>
+    <p>This revised edition reports on the result. The short version: the silences are gone, the scorecard reads cleaner, and the one practice Convergence still violates — batching questions in the design phase — is now legible rather than accidental. What follows is the before-and-after, a new scorecard, and the changelog that got us here.</p>
+  </div>
+
+  <div class="pullquote">Silence fixed. One deviation, now documented, still stands.</div>
+
+  <h2 class="section">The Audit, Revised</h2>
+  <p style="color:var(--muted); font-style: italic; margin-top: -4px;">Eight practices from the Opus 4.7 guidance, each measured against the skills as they shipped after revision.</p>
+
+  <div class="practice">
+    <h3 class="sub">Practice 01</h3>
+    <div class="practice-title">Provide comprehensive task specifications upfront</div>
+    <p class="blog">Well-specified task descriptions — intent, constraints, acceptance criteria, file locations — outperform ambiguity spread across turns.</p>
+    <p class="note"><code>/convergence-design</code> forces intent and constraints into a single 200-line artifact before any code is written; <code>/convergence-outline</code> adds file paths, signatures, and verification commands; <code>/convergence-research</code> pre-loads the relevant locations.</p>
+    <span class="verdict strong">Strong alignment</span>
+  </div>
+
+  <div class="practice">
+    <h3 class="sub">Practice 02</h3>
+    <div class="practice-title">Minimize user interactions &amp; batch context</div>
+    <p class="blog">Each user turn adds reasoning overhead. Batch questions, provide full context in one pass.</p>
+    <p class="note">The design skill inverts this: <em>"Ask questions one at a time. Do not batch questions."</em> The rationale is human cognitive load, not agent efficiency.</p>
+    <p class="shipped">A new "Deviations from Opus 4.7 Guidance" section in the README names the exception explicitly and defends it: batched questions get shallow answers, and the cost of a bad design decision is measured in thousands of lines of code.</p>
+    <span class="verdict gap">Undocumented deviation</span><span class="arrow">→</span><span class="verdict resolved">Documented deviation</span>
+  </div>
+
+  <div class="practice">
+    <h3 class="sub">Practice 03</h3>
+    <div class="practice-title">Leverage auto mode &amp; completion notifications</div>
+    <p class="blog">Use auto mode (Shift+Tab) for long-running tasks where context is complete and you trust autonomous execution.</p>
+    <p class="note">The README was silent on Auto mode. <code>/convergence-implement</code> was the canonical candidate — pre-approved outline, verification per phase, 3-failure escalation — but nothing said so.</p>
+    <p class="shipped">A "Running in Auto Mode" section lists auto-safe skills (<code>implement</code>, <code>review</code>) and auto-unsafe skills (<code>design</code>, <code>compound</code>, <code>research</code>), with a sentence of rationale for each.</p>
+    <span class="verdict gap">Gap</span><span class="arrow">→</span><span class="verdict resolved">Resolved</span>
+  </div>
+
+  <div class="practice">
+    <h3 class="sub">Practice 04</h3>
+    <div class="practice-title">Choose effort level deliberately</div>
+    <p class="blog">Default to <code>xhigh</code>. Reserve <code>max</code> for genuinely hard problems. Drop to <code>medium</code> or <code>low</code> for tightly scoped work.</p>
+    <p class="note">No skill mentioned effort levels. Users had to guess.</p>
+    <p class="shipped">Both skill tables in the README now carry an <em>Effort</em> column. Workflow skills default to <code>xhigh</code>. <code>/convergence-architecture</code>, <code>/convergence-security</code>, and <code>/convergence-debug</code> are flagged <code>max</code>. <code>/convergence-tdd</code> and <code>/convergence-compound</code> drop to <code>medium</code>.</p>
+    <span class="verdict gap">Gap</span><span class="arrow">→</span><span class="verdict resolved">Resolved</span>
+  </div>
+
+  <div class="practice">
+    <h3 class="sub">Practice 05</h3>
+    <div class="practice-title">Prompt for adaptive thinking</div>
+    <p class="blog">Fixed thinking budgets are gone. Ask for depth — <em>"think carefully, this is harder than it looks"</em> — or for speed — <em>"prioritize responding quickly."</em></p>
+    <p class="note">Neither phrase appeared anywhere in the repo.</p>
+    <p class="shipped">Five SKILL.md files now carry a one-line preamble immediately under the H1. <code>debug</code>, <code>architecture</code>, and <code>security</code> get <em>"think carefully and step-by-step before responding."</em> <code>tdd</code> and <code>compound</code> get <em>"prioritize responding quickly rather than thinking deeply."</em></p>
+    <span class="verdict gap">Gap</span><span class="arrow">→</span><span class="verdict resolved">Resolved</span>
+  </div>
+
+  <div class="practice">
+    <h3 class="sub">Practice 06</h3>
+    <div class="practice-title">State preferred response length explicitly</div>
+    <p class="blog">Opus 4.7 adapts length to complexity. Say what you want.</p>
+    <p class="note">Research: <em>under 500 lines.</em> Design: <em>under 200 lines.</em> Research agent: <em>under 100 lines.</em> The instruction-budget framing in the README reinforces the discipline across every skill.</p>
+    <span class="verdict strong">Strong alignment</span>
+  </div>
+
+  <div class="practice">
+    <h3 class="sub">Practice 07</h3>
+    <div class="practice-title">Explicitly describe when and why tools should fire</div>
+    <p class="blog">Opus 4.7 reasons more and calls tools less by default. If you want tool usage, spell out when.</p>
+    <p class="note">Research names its tools — <em>"use grep, glob, and read"</em> — and forbids RAG. Implement mandates running the verification command and reading its output. Debug, security, and review are less explicit.</p>
+    <span class="verdict mixed">Mixed — unchanged</span>
+  </div>
+
+  <div class="practice">
+    <h3 class="sub">Practice 08</h3>
+    <div class="practice-title">Request parallel subagents explicitly</div>
+    <p class="blog">The model spawns fewer subagents by default. When fanning out across items or files, ask for parallel dispatch in so many words.</p>
+    <p class="note"><code>/convergence-research</code> was the canonical fan-out case — three to seven questions, one agent per question — but its process read sequentially.</p>
+    <p class="shipped">Step 2 of the research skill now reads: <em>"Dispatch one research-agent per question in parallel — a single message with multiple Agent tool calls, not sequential dispatches. Opus 4.7 spawns fewer subagents by default, so the fan-out must be explicit."</em></p>
+    <span class="verdict gap">Gap</span><span class="arrow">→</span><span class="verdict resolved">Resolved</span>
+  </div>
+
+  <div class="pullquote">Four silences, one paragraph each. The repo reads current now.</div>
+
+  <h2 class="section">The New Scorecard</h2>
+  <table class="scorecard">
+    <thead>
+      <tr><th>Practice</th><th>Before</th><th>After</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Upfront task specification</td>
+        <td><span class="pill strong">Strong</span></td>
+        <td><span class="pill strong">Strong</span></td>
+      </tr>
+      <tr>
+        <td>Minimize user turns</td>
+        <td><span class="pill mixed">Undocumented</span></td>
+        <td><span class="pill resolved">Documented deviation</span></td>
+      </tr>
+      <tr>
+        <td>Auto mode &amp; notifications</td>
+        <td><span class="pill gap">Gap</span></td>
+        <td><span class="pill resolved">Resolved</span></td>
+      </tr>
+      <tr>
+        <td>Effort-level guidance</td>
+        <td><span class="pill gap">Gap</span></td>
+        <td><span class="pill resolved">Resolved</span></td>
+      </tr>
+      <tr>
+        <td>Adaptive thinking prompts</td>
+        <td><span class="pill gap">Gap</span></td>
+        <td><span class="pill resolved">Resolved</span></td>
+      </tr>
+      <tr>
+        <td>Explicit response length</td>
+        <td><span class="pill strong">Strong</span></td>
+        <td><span class="pill strong">Strong</span></td>
+      </tr>
+      <tr>
+        <td>Explicit tool-use guidance</td>
+        <td><span class="pill mixed">Mixed</span></td>
+        <td><span class="pill mixed">Mixed</span></td>
+      </tr>
+      <tr>
+        <td>Parallel subagents</td>
+        <td><span class="pill gap">Gap</span></td>
+        <td><span class="pill resolved">Resolved</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="color:var(--muted); font-style: italic; font-size: 15px; margin-top: 14px;">Four gaps closed. One deviation made legible. One "mixed" practice — explicit tool-use guidance on debug, security, and review — left for a future revision.</p>
+
+  <h2 class="section">Changelog</h2>
+  <p style="color:var(--muted); font-style: italic; margin-top: -4px;">What actually shipped, in the order it landed.</p>
+
+  <ol class="changelog">
+    <li>
+      <strong>Parallel subagent dispatch in research.</strong>
+      Step 2 of <code>/convergence-research</code> rewritten to dispatch one <code>research-agent</code> per question in parallel, with an explicit note that Opus 4.7 reduces default fan-out.
+      <span class="files">plugins/convergence/skills/research/SKILL.md</span>
+    </li>
+    <li>
+      <strong>Adaptive-thinking preambles on five skills.</strong>
+      "Think carefully, step-by-step" on <code>debug</code>, <code>architecture</code>, <code>security</code>. "Prioritize responding quickly" on <code>tdd</code> and <code>compound</code>. One line each, immediately under the H1.
+      <span class="files">plugins/convergence/skills/{debug,architecture,security,tdd,compound}/SKILL.md</span>
+    </li>
+    <li>
+      <strong>Effort column in both skill tables.</strong>
+      Workflow skills default to <code>xhigh</code>. <code>max</code> for architecture, security, debug. <code>medium</code> for tdd and compound.
+      <span class="files">README.md</span>
+    </li>
+    <li>
+      <strong>"Running in Auto Mode" section.</strong>
+      Names auto-safe skills and auto-unsafe skills with rationale for each.
+      <span class="files">README.md</span>
+    </li>
+    <li>
+      <strong>"Deviations from Opus 4.7 Guidance" section.</strong>
+      Acknowledges and defends the one-question-at-a-time rule in <code>/convergence-design</code> as a deliberate exception.
+      <span class="files">README.md</span>
+    </li>
+  </ol>
+
+  <h2 class="section">What's Left</h2>
+  <p>One "mixed" practice remains. <code>/convergence-debug</code>, <code>/convergence-security</code>, and <code>/convergence-review</code> could be more explicit about <em>when</em> to execute a command versus when to reason. Opus 4.7 reasons more and calls tools less by default, so this gap will probably widen over time unless addressed. It's the obvious candidate for a third edition.</p>
+
+  <div class="colophon">
+    <span>Convergence Quarterly · Editorial Review · Revised</span>
+    <span>Set in Didot, Iowan Old Style, and Helvetica Neue</span>
+    <span>Revised 17 April 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
