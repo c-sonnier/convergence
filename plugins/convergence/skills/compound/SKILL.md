@@ -5,6 +5,8 @@ description: "Capture what was learned after solving a bug or completing a featu
 
 # Compound Learning
 
+Prioritize responding quickly rather than thinking deeply — the human will correct the draft, so get a first pass down fast.
+
 After solving a non-trivial problem, capture what was learned so it compounds over time.
 
 ## The Rule

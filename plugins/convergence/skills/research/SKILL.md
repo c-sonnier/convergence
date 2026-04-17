@@ -38,9 +38,11 @@ Example: For "add endpoint to reticulate splines across tenants":
 
 Before researching, dispatch the `learnings-researcher` agent with the topic description. If relevant learnings exist in `docs/convergence/learnings/`, include them as context alongside the codebase research. Past learnings are supplementary — they don't replace codebase exploration.
 
-### Step 2 — Research (ticket-blind)
+### Step 2 — Research (ticket-blind, in parallel)
 
-For each question, explore the codebase using native tools (grep, glob, read). Do not use RAG or vector search.
+Dispatch one `research-agent` per question **in parallel** — a single message with multiple Agent tool calls, not sequential dispatches. Opus 4.7 spawns fewer subagents by default, so the fan-out must be explicit. Each agent gets one question and returns compressed findings under 100 lines.
+
+Each agent explores the codebase using native tools (grep, glob, read). Do not use RAG or vector search.
 
 For each question, record:
 1. **File paths** — where the relevant code lives

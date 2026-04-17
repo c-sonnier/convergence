@@ -5,6 +5,8 @@ description: "Three-layer security audit: access controls, audit trail, and code
 
 # Security Audit
 
+Think carefully and step-by-step before responding — missed vulnerabilities are harder to find than to exploit, so reason deeply at each layer.
+
 Three-layer security check: what can the agent access, what did it do, and is the output secure.
 
 ## The Rule

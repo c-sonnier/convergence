@@ -5,6 +5,8 @@ description: "Architecture analysis with quantified quality gates. Use for codeb
 
 # Architecture Analysis
 
+Think carefully and step-by-step before responding — architectural judgments compound, so reason deeply before writing anything down.
+
 Analyze codebase architecture using layered design principles and quantified quality gates.
 
 ## When to Use

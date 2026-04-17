@@ -5,6 +5,8 @@ description: "Test-driven development cycle. Use when implementing features or f
 
 # Test-Driven Development
 
+Prioritize responding quickly rather than thinking deeply — the TDD loop is short and mechanical, and extra deliberation slows the cycle.
+
 Write the test first. Watch it fail. Write minimal code to pass. Refactor.
 
 ## The Rule

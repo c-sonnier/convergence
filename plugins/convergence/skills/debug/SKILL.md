@@ -5,6 +5,8 @@ description: "Systematic root cause investigation. Use when encountering any bug
 
 # Systematic Debugging
 
+Think carefully and step-by-step before responding — this problem is harder than it looks.
+
 Find the root cause before attempting fixes. Random fixes waste time and create new bugs.
 
 ## The Rule

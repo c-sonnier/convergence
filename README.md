@@ -34,13 +34,13 @@ ln -s /path/to/convergence/skills/* .claude/skills/
 
 Use these sequentially for features. Each phase writes a static artifact file — you can resume from any point.
 
-| Skill | Instructions | Purpose |
-|-------|-------------|---------|
-| `/convergence-research` | 18 | Objective codebase exploration. Ticket-blind, fact-only |
-| `/convergence-design` | 22 | Alignment discussion with the human. ~200 lines. Human decides |
-| `/convergence-outline` | 16 | Vertical structure with phases, signatures, checkpoints |
-| `/convergence-implement` | 24 | Execute outline phases with TDD and verification |
-| `/convergence-review` | 28 | Code review on actual diff. Defaults to NEEDS WORK |
+| Skill | Instructions | Effort | Purpose |
+|-------|-------------|--------|---------|
+| `/convergence-research` | 18 | `xhigh` | Objective codebase exploration. Ticket-blind, fact-only |
+| `/convergence-design` | 22 | `xhigh` | Alignment discussion with the human. ~200 lines. Human decides |
+| `/convergence-outline` | 16 | `xhigh` | Vertical structure with phases, signatures, checkpoints |
+| `/convergence-implement` | 24 | `xhigh` | Execute outline phases with TDD and verification |
+| `/convergence-review` | 28 | `xhigh` | Code review on actual diff. Defaults to NEEDS WORK |
 
 **Typical flows:**
 
@@ -55,13 +55,13 @@ Pre-ship:         /convergence-review + /convergence-security
 
 Use standalone, whenever the situation calls for them.
 
-| Skill | Instructions | Purpose |
-|-------|-------------|---------|
-| `/convergence-debug` | 20 | Systematic root cause investigation. No fixes without understanding |
-| `/convergence-tdd` | 14 | Test-driven development. Red-green-refactor |
-| `/convergence-compound` | 12 | Capture learnings after solving non-trivial problems |
-| `/convergence-security` | 30 | Three-layer security audit: access, logging, scanning |
-| `/convergence-architecture` | 22 | Layer analysis, callback scoring, god object detection, quality gates |
+| Skill | Instructions | Effort | Purpose |
+|-------|-------------|--------|---------|
+| `/convergence-debug` | 20 | `max` | Systematic root cause investigation. No fixes without understanding |
+| `/convergence-tdd` | 14 | `medium` | Test-driven development. Red-green-refactor |
+| `/convergence-compound` | 12 | `medium` | Capture learnings after solving non-trivial problems |
+| `/convergence-security` | 30 | `max` | Three-layer security audit: access, logging, scanning |
+| `/convergence-architecture` | 22 | `max` | Layer analysis, callback scoring, god object detection, quality gates |
 
 ### Agents
 
@@ -95,6 +95,29 @@ These aren't just guidelines — they're hard constraints that shaped every skil
 **Codebase First.** Always scan existing patterns before proposing changes. Research is objective compression of truth — separate "what are we building" from "what exists."
 
 **Security By Default.** Three layers: scoped credentials before starting, audit logging during, vulnerability scanning after.
+
+## Running in Auto Mode
+
+Opus 4.7's auto mode (Shift+Tab) is well-suited to skills with pre-approved context and mechanical verification steps.
+
+**Auto-safe:**
+
+- `/convergence-implement` — outline is pre-approved, each phase has a verification command, 3-failure escalation is built in
+- `/convergence-review` — reads the diff, writes findings, no side effects
+
+**Not auto-safe:**
+
+- `/convergence-design` — requires human decisions turn by turn
+- `/convergence-compound` — the human must correct the draft
+- `/convergence-research` — ticket-blind by design; benefits from parallel subagent dispatch rather than unattended autonomy
+
+For auto-safe skills, provide complete context upfront (approved outline, scope boundaries) and trust the verification gates to catch failures.
+
+## Deviations from Opus 4.7 Guidance
+
+Convergence follows Anthropic's published best practices for Opus 4.7 with one deliberate exception:
+
+**`/convergence-design` asks questions one at a time.** The Opus 4.7 guidance recommends batching context to minimize user turns. Design inverts this because the bottleneck is human cognitive load, not agent reasoning overhead — batched questions get shallow answers, and the cost of a bad design decision is measured in thousands of lines of code. We accept the extra turns.
 
 ## Context Budget
 
