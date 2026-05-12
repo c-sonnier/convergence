@@ -2,6 +2,10 @@
 
 A consolidated set of skills, agents, and workflows for Claude Code. Distilled from 6 open-source repos and validated against findings from the Coding Agents Summit 2026.
 
+## Architecture
+
+If `ARCHITECTURE.md` exists in the project root, read it before modifying code. Do not violate the invariants defined there without explicit human approval.
+
 ## Design Constraints
 
 - **Instruction budget**: Every skill stays under 35 instructions. LLMs reliably follow ~150-200 total; keep active skill instructions under 60 per session.
@@ -33,14 +37,16 @@ When the user's request matches a skill, invoke it. Do not load multiple workflo
 | `/compound` | `convergence:compound` | After solving a non-trivial problem. Captures learnings |
 | `/security` | `convergence:security` | Security audit before shipping |
 | `/architecture` | `convergence:architecture` | Architecture analysis, health check, onboarding |
+| `/guardrails` | `convergence:guardrails` | Define architectural invariants and scope boundaries in ARCHITECTURE.md |
 
 ### Typical Combinations
 
+- **New project**: `/guardrails` > `/design` > `/implement` > `/review`
 - **Small feature**: `/design` > `/implement` > `/review`
 - **Large feature**: `/research` > `/design` > `/outline` > `/implement` > `/review`
 - **Bug fix**: `/debug` > `/tdd` > `/compound` (if root cause was non-obvious)
 - **Pre-ship**: `/review` + `/security`
-- **Codebase health**: `/architecture`
+- **Codebase health**: `/architecture` > `/guardrails` (if drift detected)
 
 ## Agents
 
@@ -64,3 +70,4 @@ Skills write artifacts to these paths (create directories as needed):
 | Architecture | `docs/convergence/architecture/YYYY-MM-DD-analysis.md` |
 | Learnings | `docs/convergence/learnings/YYYY-MM-DD-<slug>.md` |
 | Security | `docs/convergence/security/YYYY-MM-DD-audit.md` |
+| Guardrails | `ARCHITECTURE.md` (project root) |

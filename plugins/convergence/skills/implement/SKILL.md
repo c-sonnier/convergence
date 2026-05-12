@@ -23,6 +23,10 @@ Work through the outline phase by phase. Each phase follows TDD (test first, the
 
 ## Process
 
+### Load Constraints
+
+Before starting any phase, check for `ARCHITECTURE.md` in the project root. If it exists, read it. These invariants apply to every phase — if implementation would violate one, stop and surface it to the human before proceeding.
+
 ### Phase Loop
 
 For each phase in the outline:
@@ -104,4 +108,5 @@ Run the full test suite. All tests must pass — not just the new ones.
 | Skipping verification | "Confidence is not evidence" | Run the command, read the output |
 | Attempt #4 without asking | 3 failures = wrong architecture | Stop, escalate to human |
 | "While I'm here" refactoring | Scope creep, unrelated to outline | Stick to the outline |
+| Ignoring ARCHITECTURE.md | Drift starts here — one violation at a time | Check invariants before writing code |
 | Keeping code written before tests | Biases your tests toward implementation | Delete it, start with tests |

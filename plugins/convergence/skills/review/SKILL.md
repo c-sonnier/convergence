@@ -30,7 +30,20 @@ git diff <base-branch>...HEAD
 
 Read the full diff. If the design document exists, load it for reference.
 
-### Stage 1 — Correctness
+### Stage 1 — Architectural Compliance
+
+If `ARCHITECTURE.md` exists in the project root, read it. Check the diff against every stated invariant:
+
+1. **Invariant violations** — does any changed code break a stated rule?
+2. **Scope drift** — does this change push beyond defined scope boundaries?
+3. **Component boundary violations** — does this change introduce dependencies between components that should be isolated?
+4. **Data flow violations** — does data move in a direction the architecture prohibits?
+
+Any violation is a **must-fix** unless the human explicitly approved it during design.
+
+If no `ARCHITECTURE.md` exists, skip this stage.
+
+### Stage 2 — Correctness
 
 Does this implement what was designed?
 
@@ -39,7 +52,7 @@ Does this implement what was designed?
 3. Look for missing requirements (things in the design not in the code)
 4. Look for extra requirements (things in the code not in the design)
 
-### Stage 2 — Quality
+### Stage 3 — Quality
 
 For every changed file, check:
 
@@ -77,7 +90,7 @@ For every changed file, check:
 - Follows existing codebase patterns (or explicitly improves on them)
 - No new patterns introduced without justification
 
-### Step 3 — Run Tests
+### Step 4 — Run Tests
 
 All tests must pass before approving.
 
@@ -87,14 +100,14 @@ All tests must pass before approving.
 
 Read the output. Count failures. Report actual results.
 
-### Step 4 — Categorize Findings
+### Step 5 — Categorize Findings
 
 For each finding:
 - **must-fix** — blocks merge. Security issues, broken functionality, missing tests for critical paths
 - **should-fix** — tech debt. Won't break anything today but will cause problems later
 - **nit** — style preference. Take it or leave it
 
-### Step 5 — Write Review
+### Step 6 — Write Review
 
 Write findings to `docs/convergence/reviews/YYYY-MM-DD-<topic>-review.md` and present a summary.
 
@@ -104,6 +117,9 @@ Write findings to `docs/convergence/reviews/YYYY-MM-DD-<topic>-review.md` and pr
 Date: YYYY-MM-DD
 Branch: [branch name]
 Verdict: [APPROVED / NEEDS WORK]
+
+## Architectural Compliance
+[Invariant check results — or "No ARCHITECTURE.md found" if skipped]
 
 ## Correctness
 [Design alignment check results]
@@ -122,7 +138,7 @@ Verdict: [APPROVED / NEEDS WORK]
 [Command run, output summary]
 ```
 
-### Step 6 — Compound Nudge
+### Step 7 — Compound Nudge
 
 If the review surfaced surprising must-fix findings (issues the author likely didn't anticipate), suggest: "This review found non-obvious issues. Consider running `/convergence-compound` to capture these as learnings."
 
@@ -136,3 +152,4 @@ If the review surfaced surprising must-fix findings (issues the author likely di
 | Approving because "it looks fine" | Default is NEEDS WORK | Prove readiness with evidence |
 | Skipping security checks | "It's an internal tool" | Every endpoint is an attack surface |
 | Reviewing only new files | Changed files may have broken patterns | Review all changed files |
+| Skipping ARCHITECTURE.md check | Drift accumulates one "small" violation at a time | Check every invariant against the diff |
