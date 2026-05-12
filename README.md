@@ -2,7 +2,7 @@
 
 A consolidated set of skills, agents, and workflows for [Claude Code](https://claude.ai/code). Distilled from 6 open-source repos and validated against findings from the Coding Agents Summit 2026.
 
-239+ original items → 15 focused tools. Every skill stays under 35 instructions.
+239+ original items → 16 focused tools. Every skill stays under 35 instructions.
 
 ## Install
 
@@ -45,10 +45,12 @@ Use these sequentially for features. Each phase writes a static artifact file �
 **Typical flows:**
 
 ```
+New project:      /convergence-guardrails → /convergence-design → /convergence-implement → /convergence-review
 Small feature:    /convergence-design → /convergence-implement → /convergence-review
 Large feature:    /convergence-research → /convergence-design → /convergence-outline → /convergence-implement → /convergence-review
 Bug fix:          /convergence-debug → /convergence-tdd → /convergence-compound (if non-obvious)
 Pre-ship:         /convergence-review + /convergence-security
+Codebase health:  /convergence-architecture → /convergence-guardrails (if drift detected)
 ```
 
 ### Utility Skills
@@ -62,6 +64,7 @@ Use standalone, whenever the situation calls for them.
 | `/convergence-compound` | 12 | `medium` | Capture learnings after solving non-trivial problems |
 | `/convergence-security` | 30 | `max` | Three-layer security audit: access, logging, scanning |
 | `/convergence-architecture` | 22 | `max` | Layer analysis, callback scoring, god object detection, quality gates |
+| `/convergence-guardrails` | 18 | `xhigh` | Define architectural invariants and scope boundaries in ARCHITECTURE.md |
 
 ### Agents
 
@@ -108,6 +111,7 @@ Opus 4.7's auto mode (Shift+Tab) is well-suited to skills with pre-approved cont
 **Not auto-safe:**
 
 - `/convergence-design` — requires human decisions turn by turn
+- `/convergence-guardrails` — the human defines the invariants; agent codifies
 - `/convergence-compound` — the human must correct the draft
 - `/convergence-research` — ticket-blind by design; benefits from parallel subagent dispatch rather than unattended autonomy
 
@@ -132,6 +136,8 @@ Keep your active instruction total under 60 per session. CLAUDE.md, system promp
 | `/convergence-review` + `/convergence-security` | 58 |
 | `/convergence-debug` + `/convergence-tdd` | 34 |
 | `/convergence-debug` + `/convergence-compound` | 32 |
+| `/convergence-guardrails` alone | 18 |
+| `/convergence-architecture` + `/convergence-guardrails` | 40 |
 
 ## Where It Comes From
 
@@ -159,11 +165,12 @@ The `docs/` directory contains the full analysis chain:
 Don't install everything at once. Follow the trust ladder:
 
 1. **Start with** `/convergence-review` + `/convergence-debug` + safety hooks — immediate value, no workflow change
-2. **Add** `/convergence-design` for complex features — highest leverage single skill
-3. **Add** `/convergence-research` + `/convergence-outline` for large features — prevents bias and horizontal plans
-4. **Add** `/convergence-tdd` + `/convergence-security` as needed — invoke when the situation calls for it
-5. **Add** `/convergence-compound` after non-obvious bugs or surprises — builds institutional knowledge over time
-6. **Add** `/convergence-architecture` for periodic health checks
+2. **Add** `/convergence-guardrails` to define ARCHITECTURE.md — prevents architectural drift from the start
+3. **Add** `/convergence-design` for complex features — highest leverage single skill
+4. **Add** `/convergence-research` + `/convergence-outline` for large features — prevents bias and horizontal plans
+5. **Add** `/convergence-tdd` + `/convergence-security` as needed — invoke when the situation calls for it
+6. **Add** `/convergence-compound` after non-obvious bugs or surprises — builds institutional knowledge over time
+7. **Add** `/convergence-architecture` for periodic health checks
 
 ## License
 
